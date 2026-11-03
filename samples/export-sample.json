@@ -1,0 +1,72 @@
+{
+  "format": "dsh-deepseek-export",
+  "version": 1,
+  "exportedAt": "2026-11-02T03:50:00.000Z",
+  "source": "edge-extension",
+  "conversations": [
+    {
+      "id": "1af1c467-7aa7-459e-8917-096549349384",
+      "title": "netdisk_stream_uploader",
+      "createdAt": 1786177412901,
+      "updatedAt": 1793590398225,
+      "messages": [
+        {
+          "role": "user",
+          "content": "帮我设计一个网盘流式上传器，要求分片、断点续传、并发生成上传 URL。",
+          "thinking": "",
+          "files": [],
+          "time": 1786177412901
+        },
+        {
+          "role": "assistant",
+          "content": "分三层：分片器、调度器、持久化。\n\n```ts\nclass Chunker {\n  constructor(private size = 8 << 20) {}\n  *split(file: File) {\n    for (let off = 0; off < file.size; off += this.size) {\n      yield file.slice(off, off + this.size);\n    }\n  }\n}\n```\n\n| 阶段 | 并发 | 失败重试 |\n|---|---|---|\n| 取上传 URL | 4 | 2 |\n| 上传分片 | 8 | 3 |\n| 合并 | 1 | 0 |\n\n断点续传靠 `fileId + 分片索引` 的位图落盘。",
+          "thinking": "用户要的是工程方案，先给分层结构，再给代码骨架。",
+          "files": [],
+          "time": 1786177420000
+        },
+        {
+          "role": "user",
+          "content": "这是我画的结构图，按这个改",
+          "thinking": "",
+          "files": [
+            {
+              "name": "arch.png",
+              "mime": "image/png",
+              "dataUrl": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mP8z8BQDwAEhQGAhKmMIQAAAABJRU5ErkJggg=="
+            }
+          ],
+          "time": 1793590200000
+        },
+        {
+          "role": "assistant",
+          "content": "按图调整：把「合并」提前到分片确认阶段，避免最后一次性拼接超时。",
+          "thinking": "",
+          "files": [],
+          "time": 1793590398225
+        }
+      ]
+    },
+    {
+      "id": "b2c3d4e5-0000-1111-2222-333344445555",
+      "title": "Python 异步改造",
+      "createdAt": 1793000000000,
+      "updatedAt": 1793001000000,
+      "messages": [
+        {
+          "role": "user",
+          "content": "把这段同步代码改成异步的：\n\n```python\nimport requests\ndef fetch(u):\n    return requests.get(u).text\n```",
+          "thinking": "",
+          "files": [],
+          "time": 1793000000000
+        },
+        {
+          "role": "assistant",
+          "content": "用 `httpx.AsyncClient`：\n\n```python\nimport httpx\n\nasync def fetch(u: str) -> str:\n    async with httpx.AsyncClient(timeout=10) as client:\n        r = await client.get(u)\n        r.raise_for_status()\n        return r.text\n```\n\n注意客户端要复用，不要每个请求都新建。",
+          "thinking": "顺便提一下连接池复用。",
+          "files": [],
+          "time": 1793001000000
+        }
+      ]
+    }
+  ]
+}

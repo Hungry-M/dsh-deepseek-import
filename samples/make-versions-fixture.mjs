@@ -1,0 +1,25 @@
+import fs from 'node:fs';
+
+const payload = {
+  format: 'dsh-deepseek-export',
+  version: 1,
+  exportedAt: new Date().toISOString(),
+  conversations: [
+    {
+      id: 'fixture-versions',
+      title: '多版本测试',
+      createdAt: 1793600000000,
+      updatedAt: 1793601000000,
+      messages: [
+        { role: 'user', content: '第一次提问：怎么选型？', thinking: '', files: [], time: 1793600000000, messageId: 1, parentId: null },
+        { role: 'assistant', content: '草稿回答：选 A 就行。', thinking: '先给个简单答案。', files: [], time: 1793600010000, messageId: 2, parentId: 1 },
+        { role: 'assistant', content: '最终回答：要看并发量，A 适合低并发，B 适合高并发。', thinking: '补充并发维度。', files: [], time: 1793600020000, messageId: 3, parentId: 1 },
+        { role: 'user', content: '追问：B 的运维成本呢？', thinking: '', files: [], time: 1793600030000, messageId: 4, parentId: 3 },
+        { role: 'assistant', content: 'B 运维更重，需要专人维护集群。', thinking: '', files: [], time: 1793600040000, messageId: 5, parentId: 4 },
+      ],
+    },
+  ],
+};
+
+fs.writeFileSync('samples/fixture-versions.json', JSON.stringify(payload, null, 2));
+console.log('wrote samples/fixture-versions.json');

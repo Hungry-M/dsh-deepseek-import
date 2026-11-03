@@ -1,0 +1,39 @@
+{
+  "code": 0,
+  "msg": "ok",
+  "data": {
+    "biz_code": 0,
+    "biz_data": {
+      "chat_session": { "id": "abc", "title": "Rust 生命周期问题" },
+      "chat_messages": [
+        {
+          "message_id": 1,
+          "role": "USER",
+          "content": "解释一下 Rust 的生命周期标注为什么需要显式写出来？",
+          "thinking_content": "",
+          "inserted_at": 1760000000
+        },
+        {
+          "message_id": 2,
+          "role": "ASSISTANT",
+          "content": "因为借用检查器需要知道返回的引用借自哪个入参。\n\n```rust\nfn longest<'a>(x: &'a str, y: &'a str) -> &'a str { x }\n```\n\n没有标注时，多个引用入参会产生歧义。",
+          "thinking_content": "用户问的是显式标注的必要性，应该从借用检查器的视角解释。",
+          "inserted_at": 1760000010
+        },
+        {
+          "message_id": 3,
+          "role": "USER",
+          "content": "那 'static 呢？",
+          "inserted_at": 1760000020,
+          "files": [{ "file_name": "notes.md" }]
+        },
+        {
+          "message_id": 4,
+          "role": "ASSISTANT",
+          "content": "'static 表示引用活得和程序一样久，常见于字符串字面量和全局常量。",
+          "inserted_at": 1760000030
+        }
+      ]
+    }
+  }
+}

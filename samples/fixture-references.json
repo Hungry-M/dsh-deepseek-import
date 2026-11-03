@@ -1,0 +1,27 @@
+{
+  "format": "dsh-deepseek-export",
+  "version": 1,
+  "conversations": [
+    {
+      "id": "refs-1",
+      "title": "引用测试",
+      "messages": [
+        { "role": "user", "content": "百度网盘 API 有哪些坑？", "thinking": "", "files": [], "messageId": 1, "parentId": null, "status": "FINISHED" },
+        {
+          "role": "assistant",
+          "content": "搜索到 46 个网页搜索到 35 个网页## 结论\n\n有成熟库可参考[reference:0][reference:1]，但分片上传有限制[reference:2]。",
+          "thinking": "先搜一下再总结。",
+          "files": [],
+          "messageId": 2,
+          "parentId": 1,
+          "status": "FINISHED",
+          "references": [
+            { "url": "https://bypy.readthedocs.io/", "title": "bypy 文档" },
+            { "url": "https://github.com/houtianze/bypy", "title": "bypy GitHub" },
+            { "url": "https://pan.baidu.com/union/doc/", "title": "百度网盘开放平台" }
+          ]
+        }
+      ]
+    }
+  ]
+}

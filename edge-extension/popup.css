@@ -1,0 +1,117 @@
+:root {
+  color-scheme: light dark;
+  --bg: #ffffff;
+  --fg: #1f2329;
+  --muted: #6b7280;
+  --line: #e5e7eb;
+  --accent: #4d6bfe;
+  --danger: #dc2626;
+}
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg: #1b1d21;
+    --fg: #e6e8eb;
+    --muted: #9aa0a6;
+    --line: #33373d;
+    --accent: #7b93ff;
+  }
+}
+* { box-sizing: border-box; }
+body {
+  width: 380px;
+  margin: 0;
+  padding: 12px;
+  background: var(--bg);
+  color: var(--fg);
+  font: 13px/1.5 system-ui, "Segoe UI", "Microsoft YaHei", sans-serif;
+}
+header h1 { margin: 0 0 4px; font-size: 15px; }
+.hint { margin: 0; color: var(--muted); font-size: 12px; }
+.hint.small { font-size: 11px; margin-top: 8px; }
+.toolbar { display: flex; flex-wrap: wrap; gap: 6px; margin: 10px 0; }
+button {
+  border: 1px solid var(--line);
+  background: transparent;
+  color: var(--fg);
+  border-radius: 6px;
+  padding: 4px 8px;
+  font-size: 12px;
+  cursor: pointer;
+}
+button:hover { border-color: var(--accent); }
+button.primary { background: var(--accent); border-color: var(--accent); color: #fff; }
+button.danger { color: var(--danger); border-color: var(--danger); }
+.list { list-style: none; margin: 0; padding: 0; max-height: 320px; overflow: auto; }
+.list li {
+  display: flex;
+  gap: 8px;
+  align-items: flex-start;
+  padding: 8px 6px;
+  border-bottom: 1px solid var(--line);
+}
+.list li:last-child { border-bottom: none; }
+.list .title { font-weight: 600; word-break: break-all; }
+.list .meta { color: var(--muted); font-size: 11px; }
+.list .body { flex: 1; min-width: 0; }
+.list .refetch { flex: 0 0 auto; font-size: 11px; padding: 2px 6px; }
+.empty { color: var(--muted); text-align: center; padding: 24px 0; }
+.footer { border-top: 1px solid var(--line); margin-top: 8px; padding-top: 8px; }
+.option { display: block; color: var(--muted); font-size: 12px; margin-bottom: 4px; }
+.actions { display: flex; gap: 8px; margin-top: 8px; }
+.settings {
+  border: 1px solid var(--line);
+  border-radius: 6px;
+  padding: 8px;
+  margin: 8px 0;
+}
+.settings.hidden { display: none; }
+.settings label { display: block; font-size: 12px; color: var(--muted); margin-bottom: 6px; }
+.settings select,
+.settings input[type='text'],
+.settings input[type='number'] {
+  width: 100%;
+  margin-top: 2px;
+  padding: 3px 6px;
+  border: 1px solid var(--line);
+  border-radius: 4px;
+  background: transparent;
+  color: var(--fg);
+  font-size: 12px;
+}
+/* 勾选框不能套用「输入框宽度 100%」，否则文字会被挤到下一行 */
+.settings label.option {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin: 8px 0 4px;
+}
+.settings label.option input[type='checkbox'] {
+  width: auto;
+  margin: 0;
+  flex: 0 0 auto;
+}
+.settings details {
+  margin: 4px 0 8px;
+  font-size: 12px;
+  color: var(--muted);
+}
+.settings details summary { cursor: pointer; padding: 2px 0; }
+.settings details[open] { border-left: 2px solid var(--line); padding-left: 8px; }
+.settings button { margin-top: 4px; }
+.settings-actions { display: flex; gap: 6px; }
+.help {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 14px;
+  height: 14px;
+  margin-left: 4px;
+  border: 1px solid var(--line);
+  border-radius: 50%;
+  font-size: 10px;
+  line-height: 1;
+  color: var(--muted);
+  cursor: help;
+  vertical-align: middle;
+}
+.status { min-height: 18px; margin: 8px 0 0; font-size: 12px; color: var(--accent); }

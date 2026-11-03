@@ -1,0 +1,43 @@
+{
+  "format": "dsh-deepseek-export",
+  "version": 1,
+  "exportedAt": "2026-11-02T06:00:00.000Z",
+  "source": "edge-extension",
+  "conversations": [
+    {
+      "id": "test-files-0001",
+      "title": "附件与思考测试",
+      "createdAt": 1793600000000,
+      "updatedAt": 1793600100000,
+      "messages": [
+        {
+          "role": "user",
+          "content": "这两个文件帮我看看",
+          "thinking": "",
+          "files": [
+            {
+              "name": "头脑风暴.txt",
+              "mime": "text/plain",
+              "size": 50,
+              "dataUrl": "data:text/plain;base64,5oiR5Zyo5rWL6K+V5biW5Zu+54mH44CB5paH5Lu25Lul5Y+K6KKr572R6aG16L2s5Yqg6L2955qE6ZW/6L6T5YWl"
+            },
+            {
+              "name": "需求文档.pdf",
+              "mime": "application/pdf",
+              "size": 204800,
+              "url": "https://cdn.deepseek.com/files/xxx.pdf"
+            }
+          ],
+          "time": 1793600000000
+        },
+        {
+          "role": "assistant",
+          "content": "收到，第一个是纯文本，第二个需要在本地找到对应文件。",
+          "thinking": "用户上传了两个文件。文本已内嵌，PDF 只给了链接，需要提示用户手动放置。\n不要虚构 PDF 内容。",
+          "files": [],
+          "time": 1793600100000
+        }
+      ]
+    }
+  ]
+}

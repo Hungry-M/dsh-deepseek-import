@@ -1,0 +1,18 @@
+{
+  "format": "dsh-deepseek-export",
+  "version": 1,
+  "conversations": [
+    {
+      "id": "interrupt-1",
+      "title": "中断输出测试",
+      "messages": [
+        { "role": "user", "content": "问题一", "thinking": "", "files": [], "messageId": 1, "parentId": null, "status": "FINISHED" },
+        { "role": "assistant", "content": "", "thinking": "想了一半就被按停", "files": [], "messageId": 2, "parentId": 1, "status": "INTERRUPTED" },
+        { "role": "user", "content": "问题二", "thinking": "", "files": [], "messageId": 3, "parentId": 2, "status": "FINISHED" },
+        { "role": "assistant", "content": "说到一半就断了，后面没有", "thinking": "生成到一半", "files": [], "messageId": 4, "parentId": 3, "status": "WIP" },
+        { "role": "user", "content": "问题三", "thinking": "", "files": [], "messageId": 5, "parentId": 4, "status": "FINISHED" },
+        { "role": "assistant", "content": "这是完整回答。", "thinking": "", "files": [], "messageId": 6, "parentId": 5, "status": "FINISHED" }
+      ]
+    }
+  ]
+}

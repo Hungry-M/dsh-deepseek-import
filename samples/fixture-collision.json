@@ -1,0 +1,5 @@
+﻿{"format":"dsh-deepseek-export","version":1,"conversations":[{"id":"collision-1","title":"同名附件","messages":[
+{"role":"user","content":"第一张","files":[{"name":"shot.png","mime":"image/png","dataUrl":"data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mP8z8BQDwAEhQGAhKmMIQAAAABJRU5ErkJggg=="}]},
+{"role":"assistant","content":"收到"},
+{"role":"user","content":"第二张","files":[{"name":"shot.png","mime":"image/png","dataUrl":"data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mP8z8BQDwAEhQGAhKmMIQAAAABJRU5ErkJggg=="}]},
+{"role":"assistant","content":"也收到"}]}]}

@@ -1,0 +1,29 @@
+# 依赖
+node_modules/
+
+# 导入产物 / 运行时状态
+import.log
+import.config.json
+.dsh-imported/
+import-archive/
+
+# 打包与签名
+*.crx
+*.pem
+dist/
+build/
+
+# 样本（真实对话导出，体积大）
+samples/tmp-*
+samples/sse-sample.txt
+samples/history-sample.json
+
+# 系统与编辑器
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
+
+# 临时
+*.tmp
+*.bak

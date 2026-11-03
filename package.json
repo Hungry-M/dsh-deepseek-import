@@ -1,0 +1,44 @@
+{
+  "name": "dsh-deepseek-import",
+  "version": "0.1.0",
+  "description": "DeepSeek web chat → DeepSeek Harness sessions (Edge extension + importer CLI)",
+  "type": "module",
+  "license": "MIT",
+  "author": "Hungry-M",
+  "bin": {
+    "dsh-import": "./dsh-import.mjs"
+  },
+  "files": [
+    "dsh-import.mjs",
+    "dsh-import-tui.mjs",
+    "dsh-import.cmd",
+    "move-session.mjs",
+    "remove-session.mjs",
+    "audit-imports.mjs",
+    "edge-extension/",
+    "README.md",
+    "README.zh.md",
+    "LICENSE"
+  ],
+  "engines": {
+    "node": ">=22"
+  },
+  "keywords": [
+    "deepseek",
+    "deepseek-harness",
+    "dsh",
+    "dsh-plugin",
+    "chat",
+    "import",
+    "migration",
+    "edge-extension"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Hungry-M/dsh-deepseek-import.git"
+  },
+  "scripts": {
+    "list": "node dsh-import.mjs --list",
+    "tui": "node dsh-import-tui.mjs"
+  }
+}

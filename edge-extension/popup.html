@@ -1,0 +1,92 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8" />
+    <link rel="stylesheet" href="popup.css" />
+    <title>DSH 对话迁移</title>
+  </head>
+  <body>
+    <header>
+      <h1 data-i18n="title">DSH 对话迁移</h1>
+      <p class="hint" data-i18n="hint">在 DeepSeek 里打开任意对话，加载完成后它会自动出现在下面。</p>
+    </header>
+
+    <div class="toolbar">
+      <button id="selectAll" class="ghost" data-i18n="selectAll">全选</button>
+      <button id="selectNone" class="ghost" data-i18n="selectNone">反选</button>
+      <button id="capture" class="ghost" data-i18n="capture">抓取对话</button>
+      <button id="refresh" class="ghost" data-i18n="refresh">刷新</button>
+      <button id="clearAll" class="ghost" data-i18n="clearAll">清空</button>
+      <button id="gear" class="ghost" title="Settings">⚙</button>
+    </div>
+
+    <div id="settings" class="settings hidden">
+      <label>
+        <span data-i18n="langLabel">语言</span>
+        <select id="lang">
+          <option value="zh">中文</option>
+          <option value="en">English</option>
+        </select>
+      </label>
+      <label>
+        <span data-i18n="subdirLabel">保存子目录</span>
+        <span class="help" data-help="subdirHint" role="img" aria-label="?">?</span>
+        <input id="subdir" type="text" placeholder="dsh-import" />
+      </label>
+
+      <label class="option">
+        <input type="checkbox" id="autoTrim" checked />
+        <span data-i18n="autoTrimLabel">超长对话自动截断</span>
+        <span class="help" data-help="autoTrimHint" role="img" aria-label="?">?</span>
+      </label>
+      <details id="autoTrimDetails">
+        <summary data-i18n="autoTrimAdvanced">高级参数</summary>
+        <label>
+          <span data-i18n="autoTrimCharsLabel">触发阈值（字）</span>
+          <input id="autoTrimChars" type="number" min="10000" step="10000" value="120000" />
+        </label>
+        <label>
+          <span data-i18n="autoTrimTurnsLabel">最多保留轮数</span>
+          <input id="autoTrimTurns" type="number" min="1" step="1" value="20" />
+        </label>
+        <label>
+          <span data-i18n="autoTrimBudgetLabel">保留字符预算</span>
+          <input id="autoTrimBudget" type="number" min="1000" step="1000" value="60000" />
+        </label>
+      </details>
+
+      <label class="option">
+        <input type="checkbox" id="sidecarExternal" />
+        <span data-i18n="sidecarExternalLabel">旁挂文件写到 DSH 目录</span>
+        <span class="help" data-help="sidecarExternalHint" role="img" aria-label="?">?</span>
+      </label>
+
+      <div class="settings-actions">
+        <button id="saveSettings" class="ghost" data-i18n="save">保存</button>
+        <button id="debug" class="ghost" data-i18n="debug">诊断</button>
+      </div>
+    </div>
+
+    <ul id="list" class="list"></ul>
+    <p id="empty" class="empty" data-i18n="empty">还没有捕获到对话。</p>
+
+    <div class="footer">
+      <label class="option">
+        <input type="checkbox" id="withImages" checked />
+        <span data-i18n="withFiles">内嵌附件（图片/文件，体积会变大）</span>
+      </label>
+      <label class="option">
+        <input type="checkbox" id="withThinking" checked />
+        <span data-i18n="withThinking">保留思考过程</span>
+      </label>
+      <div class="actions">
+        <button id="export" class="primary" data-i18n="export">导出选中</button>
+        <button id="delete" class="danger" data-i18n="delete">删除选中</button>
+      </div>
+      <p id="status" class="status"></p>
+      <p class="hint small" data-i18n="footerHint">导出后运行工作区的「导入到DSH.cmd」，即可重建为 DSH 会话。</p>
+    </div>
+
+    <script src="popup.js"></script>
+  </body>
+</html>
