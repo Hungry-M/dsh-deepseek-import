@@ -8,6 +8,23 @@ Capture conversations from **Edge** on `chat.deepseek.com` (one or many), export
 Edge extension  ──export──▶  dsh-deepseek-*.json  ──dsh-import.cmd──▶  ~/.dsh/sessions + workspace.json
 ```
 
+## Install
+
+Requires **Node.js 22+** (session compression uses built-in zstd).
+
+```powershell
+# from npm (once published)
+npm i -g dsh-deepseek-import
+dsh-import --list
+
+# or run straight from source
+git clone https://github.com/Hungry-M/dsh-deepseek-import.git
+cd dsh-deepseek-import
+node dsh-import.mjs --list
+```
+
+The Edge extension must be loaded separately (next section) — a browser extension cannot ship inside an npm package.
+
 ## 1. Install the extension (once)
 
 1. Open `edge://extensions/` in Edge

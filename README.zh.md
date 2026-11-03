@@ -1,10 +1,29 @@
 # DSH 对话迁移
 
+[English](README.md) | 中文
+
 从 **Edge** 抓取 `chat.deepseek.com` 的对话（单个或多个），导出 JSON，再由本地脚本重建为 DeepSeek Harness 的可继续会话。
 
 ```
 Edge 扩展  ──导出──▶  dsh-deepseek-*.json  ──dsh-import.cmd──▶  ~/.dsh/sessions + workspace.json
 ```
+
+## 安装
+
+需要 **Node.js 22+**（会话压缩用了内置 zstd）。
+
+```powershell
+# 从 npm（发布后）
+npm i -g dsh-deepseek-import
+dsh-import --list
+
+# 或直接用源码，不装全局
+git clone https://github.com/Hungry-M/dsh-deepseek-import.git
+cd dsh-deepseek-import
+node dsh-import.mjs --list
+```
+
+扩展必须单独加载（见下一节）——浏览器扩展没法随 npm 包一起装。
 
 ## 一、安装扩展（一次性）
 
