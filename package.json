@@ -20,7 +20,7 @@
     }
   },
   "peerDependencies": {
-    "@deepseek-ai/dsh-tools": "*"
+    "@deepseek-ai/dsh-tools": ">=0.0.0-0"
   },
   "peerDependenciesMeta": {
     "@deepseek-ai/dsh-tools": {
