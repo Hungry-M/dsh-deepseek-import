@@ -33,21 +33,26 @@ allOk &= check(
 );
 
 // 2. 真实样本（截断在思考片段中间）
-const sample = fs.readFileSync('samples/sse-sample.txt', 'utf8');
-const state = DshStreamParser.createState();
-for (const line of sample.split('\n')) {
-  if (!line.startsWith('data:')) continue;
-  const raw = line.slice(5).trim();
-  if (!raw || raw === '[DONE]') continue;
-  try {
-    DshStreamParser.apply(JSON.parse(raw), state);
-  } catch {
-    /* 截断的最后一行 */
+// 样本来自真实对话，不进仓库；本地有就跑，CI 上跳过。
+if (fs.existsSync('samples/sse-sample.txt')) {
+  const sample = fs.readFileSync('samples/sse-sample.txt', 'utf8');
+  const state = DshStreamParser.createState();
+  for (const line of sample.split('\n')) {
+    if (!line.startsWith('data:')) continue;
+    const raw = line.slice(5).trim();
+    if (!raw || raw === '[DONE]') continue;
+    try {
+      DshStreamParser.apply(JSON.parse(raw), state);
+    } catch {
+      /* 截断的最后一行 */
+    }
   }
+  const real = DshStreamParser.result(state);
+  allOk &= check('真实样本只解析出思考', real.content, '');
+  allOk &= check('真实样本思考非空', real.thinking.length > 0, true);
+} else {
+  console.log('SKIP  真实样本（samples/sse-sample.txt 不在仓库里）');
 }
-const real = DshStreamParser.result(state);
-allOk &= check('真实样本只解析出思考', real.content, '');
-allOk &= check('真实样本思考非空', real.thinking.length > 0, true);
 
 // 3. SET 覆盖
 allOk &= check(
