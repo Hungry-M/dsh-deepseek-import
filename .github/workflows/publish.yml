@@ -1,11 +1,11 @@
 name: publish
 
-# 发版：打 tag（如 v0.1.0）后自动发布到 npm。
-# 首次使用前需要在 npm 网站上配置 Trusted Publishing：
+# 发版：打 tag（如 v0.1.2）后自动发布到 npm，走 OIDC 可信发布（不需要 token / 验证码）。
+# 前置条件（已在 npm 站点配置）：
 #   npmjs.com → 包 → Settings → Trusted Publisher → GitHub Actions
 #   Repository: Hungry-M/dsh-deepseek-import
 #   Workflow:   publish.yml
-# 这样不需要在仓库里存 npm token。
+#   Allowed actions: Allow npm publish
 
 on:
   push:
@@ -22,18 +22,22 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
+      # 可信发布需要 npm >= 11.5.1；Node 22 自带的是 10.x
       - uses: actions/setup-node@v4
         with:
-          node-version: 22
+          node-version: 24
           registry-url: https://registry.npmjs.org
 
-      - name: Syntax check
+      - name: Show toolchain
         run: |
-          node --check dsh-import.mjs
-          node --check dsh-import-tui.mjs
-          node --check move-session.mjs
-          node --check remove-session.mjs
-          node --check edge-extension/merge.js
+          node --version
+          npm --version
+
+      - name: Tests
+        run: |
+          node verify/test-parser.mjs
+          node verify/test-merge.mjs
+          node verify/smoke.mjs
 
       - name: Publish
         run: npm publish --access public --provenance
