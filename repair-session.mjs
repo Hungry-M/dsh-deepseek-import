@@ -18,6 +18,7 @@ import os from 'node:os';
 import path from 'node:path';
 import zlib from 'node:zlib';
 import crypto from 'node:crypto';
+import { fileURLToPath } from 'node:url';
 
 const DSH_HOME = process.env.DSH_HOME || path.join(os.homedir(), '.dsh');
 const SESSIONS = path.join(DSH_HOME, 'sessions');
@@ -156,7 +157,7 @@ function repair(file, plan) {
   return `${plan.action === 'insert' ? '已插入 system 头' : '已把 system 头移到最前'}（${events.length} 条事件${cacheNote}）`;
 }
 
-if (audit || all) {
+export function auditSessions({ dryRun = false, apply = false } = {}) {
   const list = sessionFiles();
   const problems = [];
   for (const item of list) {
@@ -175,30 +176,45 @@ if (audit || all) {
   console.log(`会话总数 ${list.length}，需要处理 ${problems.length}`);
   for (const item of problems) {
     console.log(`  ${item.id}  ${item.status}`);
-    if (dryRun || !all) continue;
-    const result = repair(item.file, item.plan);
-    console.log(`    → ${result}`);
+    if (dryRun || !apply || !item.plan) continue;
+    console.log(`    → ${repair(item.file, item.plan)}`);
   }
   if (dryRun) console.log('\n[dry-run] 没有修改任何文件');
-  process.exit(0);
+  return problems;
 }
 
-if (!targets.length) {
-  console.error('用法：node repair-session.mjs --audit | <session-dir> [--dry-run] | --all');
-  process.exit(1);
-}
-
-for (const target of targets) {
-  const dir = target.endsWith('session.v4.jsonl.zstd') ? path.dirname(target) : target;
-  const file = path.join(dir, 'session.v4.jsonl.zstd');
-  if (!fs.existsSync(file)) {
-    console.error(`找不到 ${file}`);
-    continue;
+export function repairSessions(paths, { dryRun = false } = {}) {
+  for (const target of paths) {
+    const dir = target.endsWith('session.v4.jsonl.zstd') ? path.dirname(target) : target;
+    const file = path.join(dir, 'session.v4.jsonl.zstd');
+    if (!fs.existsSync(file)) {
+      console.error(`找不到 ${file}`);
+      continue;
+    }
+    const info = inspect(file);
+    const plan = planRepair(info);
+    console.log(`${path.basename(dir)}: ${plan.action}`);
+    if (plan.action === 'ok' || plan.action === 'skip' || dryRun) continue;
+    console.log('  → ' + repair(file, plan));
   }
-  const info = inspect(file);
-  const plan = planRepair(info);
-  console.log(`${path.basename(dir)}: ${plan.action}`);
-  if (plan.action === 'ok' || plan.action === 'skip') continue;
-  if (dryRun) continue;
-  console.log('  → ' + repair(file, plan));
 }
+
+// ---------------------------------------------------------------- 入口
+
+const invokedDirectly =
+  process.argv[1] && path.resolve(process.argv[1]) === path.resolve(fileURLToPath(import.meta.url));
+
+if (invokedDirectly) {
+  if (audit || all) {
+    auditSessions({ dryRun, apply: all });
+    process.exit(0);
+  }
+
+  if (!targets.length) {
+    console.error('用法：node repair-session.mjs --audit | <session-dir> [--dry-run] | --all');
+    process.exit(1);
+  }
+
+  repairSessions(targets, { dryRun });
+}
+

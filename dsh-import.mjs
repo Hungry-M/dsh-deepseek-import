@@ -86,6 +86,8 @@ function parseArgs(argv) {
     else if (arg === '--tail') opts.tail = Number(argv[++i]);
     else if (arg === '--no-auto-trim') opts.autoTrim = false;
     else if (arg === '--no-system-head') opts.noSystemHead = true;
+    else if (arg === '--audit') opts.audit = true;
+    else if (arg === '--repair') { opts.audit = true; opts.applyRepair = true; }
     else if (arg === '--no-sidecar' || arg === '--sidecar') opts.noSidecar = true;
     else if (arg === '--sidecar-dir') opts.sidecarDir = argv[++i];
     else if (arg === '--context-window') opts.contextWindow = Number(argv[++i]) || null;
@@ -903,6 +905,12 @@ function writeTranscript(conversation, workspacePath, sessionId) {
 // ---------------------------------------------------------------- 主流程
 
 async function main() {
+  if (opts.audit) {
+    const { auditSessions } = await import('./repair-session.mjs');
+    auditSessions({ dryRun: opts.dryRun, apply: opts.applyRepair === true });
+    return { audited: true };
+  }
+
   // ---------- 参数自检：互相排斥的组合直接拒绝 ----------
   if (opts.tail !== undefined && opts.tail !== null) {
     if (!Number.isInteger(opts.tail) || opts.tail < 1) {

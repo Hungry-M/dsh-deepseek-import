@@ -134,6 +134,17 @@ node dsh-import.mjs export.json --from-match "some text you typed"
 node dsh-import.mjs export.json --from-index 157
 ```
 
+### Auditing imported sessions
+
+DSH session format v4 requires the first model-visible node to be a `system/message`.
+Imports from `0.1.0` predate that fix and would break the moment you kept chatting in them.
+`0.1.1` writes the head on import, and this command repairs sessions created earlier:
+
+```powershell
+node dsh-import.mjs --audit     # report only
+node dsh-import.mjs --repair    # insert/move the head, resequence, drop the projection cache
+```
+
 - `--from-match` does a case-insensitive substring match over **user messages**, first hit wins
 - If the same text was edited and appears several times, the TUI lists them chronologically and you pick by number
 - Choosing a branch point disables auto-trim (your choice wins); the full text still goes to `transcript.md`

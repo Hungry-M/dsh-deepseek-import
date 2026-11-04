@@ -120,6 +120,8 @@ node dsh-import.mjs 导出.json --keep-interrupted # 保留不完整的中断输
 node dsh-import.mjs 导出.json --only "<对话 id>"       # 只导指定对话（逗号分隔可多个）
 node dsh-import.mjs 导出.json --from-match "某句话"     # 从匹配到的用户消息开始分支
 node dsh-import.mjs 导出.json --from-index 157         # 按消息序号分支
+node dsh-import.mjs --audit                            # 体检已导入会话（system 头是否完好）
+node dsh-import.mjs --repair                           # 批量修掉有隐患的会话
 
 > --tail 与 --from-index/--from-match 互斥（一个是取最后 N 轮，一个是从指定位置开始），同时给出会直接报错退出；--from-* 只能用于单个对话。
 ```
