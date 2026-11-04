@@ -1,0 +1,42 @@
+name: ci
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+
+      - name: Syntax
+        run: |
+          node --check dsh-import.mjs
+          node --check dsh-import-tui.mjs
+          node --check repair-session.mjs
+          node --check move-session.mjs
+          node --check remove-session.mjs
+          node --check audit-imports.mjs
+          node --check edge-extension/merge.js
+          node --check edge-extension/content.js
+          node --check edge-extension/inject.js
+          node --check edge-extension/popup.js
+          node --check edge-extension/stream-parser.js
+
+      - name: Unit tests
+        run: |
+          node verify/test-parser.mjs
+          node verify/test-merge.mjs
+
+      - name: End-to-end smoke
+        run: node verify/smoke.mjs
+
+      - name: Pack check
+        run: npm pack --dry-run
