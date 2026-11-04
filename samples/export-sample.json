@@ -6,13 +6,13 @@
   "conversations": [
     {
       "id": "1af1c467-7aa7-459e-8917-096549349384",
-      "title": "netdisk_stream_uploader",
+      "title": "文件上传器设计",
       "createdAt": 1786177412901,
       "updatedAt": 1793590398225,
       "messages": [
         {
           "role": "user",
-          "content": "帮我设计一个网盘流式上传器，要求分片、断点续传、并发生成上传 URL。",
+          "content": "帮我设计一个文件上传服务，要求分片、断点续传、并发生成上传 URL。",
           "thinking": "",
           "files": [],
           "time": 1786177412901
