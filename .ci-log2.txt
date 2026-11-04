@@ -1,0 +1,266 @@
+﻿2026-11-04T10:31:04.6965673Z Current runner version: '2.338.2'
+2026-11-04T10:31:04.7046691Z ##[group]Runner Image Provisioner
+2026-11-04T10:31:04.7048394Z Hosted Compute Agent
+2026-11-04T10:31:04.7049460Z Version: 20261028.624
+2026-11-04T10:31:04.7050907Z Commit: 54898b74c23fde5556c9b3c3a2290865feef0dfe
+2026-11-04T10:31:04.7052167Z Build Date: 2026-10-28T21:51:42Z
+2026-11-04T10:31:04.7053554Z Worker ID: {b0adf8ad-f274-4179-a347-b10a8ab7c1b4}
+2026-11-04T10:31:04.7055015Z Region: eastus
+2026-11-04T10:31:04.7055999Z Cloud: Azure
+2026-11-04T10:31:04.7057062Z ##[endgroup]
+2026-11-04T10:31:04.7059534Z ##[group]Operating System
+2026-11-04T10:31:04.7060612Z Ubuntu
+2026-11-04T10:31:04.7062475Z 26.04.1
+2026-11-04T10:31:04.7083926Z LTS
+2026-11-04T10:31:04.7084939Z ##[endgroup]
+2026-11-04T10:31:04.7085900Z ##[group]Runner Image
+2026-11-04T10:31:04.7087145Z Image: ubuntu-26.04
+2026-11-04T10:31:04.7088167Z Version: 20261101.186.1
+2026-11-04T10:31:04.7090478Z Included Software: https://github.com/actions/runner-images/blob/ubuntu26/20261101.186/images/ubuntu/Ubuntu2604-Readme.md
+2026-11-04T10:31:04.7093462Z Image Release: https://github.com/actions/runner-images/releases/tag/ubuntu26%2F20261101.186
+2026-11-04T10:31:04.7095314Z ##[endgroup]
+2026-11-04T10:31:04.7097175Z ##[group]GITHUB_TOKEN Permissions
+2026-11-04T10:31:04.7100312Z Contents: read
+2026-11-04T10:31:04.7101251Z Metadata: read
+2026-11-04T10:31:04.7102198Z ##[endgroup]
+2026-11-04T10:31:04.7126163Z Secret source: Actions
+2026-11-04T10:31:04.7127868Z Cache mode: write
+2026-11-04T10:31:04.7129344Z Prepare workflow directory
+2026-11-04T10:31:04.7757981Z Prepare all required actions
+2026-11-04T10:31:04.7832306Z Getting action download info
+2026-11-04T10:31:04.9470924Z Download action repository 'actions/checkout@v4' (SHA:11d5960a326750d5838078e36cf38b85af677262)
+2026-11-04T10:31:05.0693602Z Download action repository 'actions/setup-node@v4' (SHA:49933ea5288caeca8642d1e84afbd3f7d6820020)
+2026-11-04T10:31:05.2661747Z Complete job name: publish
+2026-11-04T10:31:05.3595662Z ##[group]Run actions/checkout@v4
+2026-11-04T10:31:05.3596591Z with:
+2026-11-04T10:31:05.3597068Z   repository: Hungry-M/dsh-deepseek-import
+2026-11-04T10:31:05.3601129Z   token: ***
+2026-11-04T10:31:05.3601576Z   ssh-strict: true
+2026-11-04T10:31:05.3602008Z   ssh-user: git
+2026-11-04T10:31:05.3602447Z   persist-credentials: true
+2026-11-04T10:31:05.3603105Z   clean: true
+2026-11-04T10:31:05.3603544Z   sparse-checkout-cone-mode: true
+2026-11-04T10:31:05.3604060Z   fetch-depth: 1
+2026-11-04T10:31:05.3604494Z   fetch-tags: false
+2026-11-04T10:31:05.3604935Z   show-progress: true
+2026-11-04T10:31:05.3605382Z   lfs: false
+2026-11-04T10:31:05.3605794Z   submodules: false
+2026-11-04T10:31:05.3606246Z   set-safe-directory: true
+2026-11-04T10:31:05.3606751Z   allow-unsafe-pr-checkout: false
+2026-11-04T10:31:05.3607519Z ##[endgroup]
+2026-11-04T10:31:05.7761520Z Syncing repository: Hungry-M/dsh-deepseek-import
+2026-11-04T10:31:05.7773610Z ##[group]Getting Git version info
+2026-11-04T10:31:05.7777706Z Working directory is '/home/runner/work/dsh-deepseek-import/dsh-deepseek-import'
+2026-11-04T10:31:05.7780260Z [command]/usr/bin/git version
+2026-11-04T10:31:05.7781352Z git version 2.56.0
+2026-11-04T10:31:05.7785385Z ##[endgroup]
+2026-11-04T10:31:05.7793170Z Temporarily overriding HOME='/home/runner/work/_temp/833da11e-06ee-45a0-b947-40c1e9c40f52' before making global git config changes
+2026-11-04T10:31:05.7796301Z Adding repository directory to the temporary git global config as a safe directory
+2026-11-04T10:31:05.7799064Z [command]/usr/bin/git config --global --add safe.directory /home/runner/work/dsh-deepseek-import/dsh-deepseek-import
+2026-11-04T10:31:05.7803364Z Deleting the contents of '/home/runner/work/dsh-deepseek-import/dsh-deepseek-import'
+2026-11-04T10:31:05.7805799Z ##[group]Initializing the repository
+2026-11-04T10:31:05.7807496Z [command]/usr/bin/git init /home/runner/work/dsh-deepseek-import/dsh-deepseek-import
+2026-11-04T10:31:05.7809701Z hint: Using 'master' as the name for the initial branch. This default branch name
+2026-11-04T10:31:05.7812197Z hint: will change to "main" in Git 3.0. To configure the initial branch name
+2026-11-04T10:31:05.7814526Z hint: to use in all of your new repositories, which will suppress this warning,
+2026-11-04T10:31:05.7816265Z hint: call:
+2026-11-04T10:31:05.7817156Z hint:
+2026-11-04T10:31:05.7818262Z hint: 	git config --global init.defaultBranch <name>
+2026-11-04T10:31:05.7819663Z hint:
+2026-11-04T10:31:05.7820870Z hint: Names commonly chosen instead of 'master' are 'main', 'trunk' and
+2026-11-04T10:31:05.7822902Z hint: 'development'. The just-created branch can be renamed via this command:
+2026-11-04T10:31:05.7824500Z hint:
+2026-11-04T10:31:05.7825425Z hint: 	git branch -m <name>
+2026-11-04T10:31:05.7826444Z hint:
+2026-11-04T10:31:05.7827711Z hint: Disable this message with "git config set advice.defaultBranchName false"
+2026-11-04T10:31:05.7837287Z Initialized empty Git repository in /home/runner/work/dsh-deepseek-import/dsh-deepseek-import/.git/
+2026-11-04T10:31:05.7841243Z [command]/usr/bin/git remote add origin https://github.com/Hungry-M/dsh-deepseek-import
+2026-11-04T10:31:05.7845032Z ##[endgroup]
+2026-11-04T10:31:05.7846561Z ##[group]Disabling automatic garbage collection
+2026-11-04T10:31:05.7847965Z [command]/usr/bin/git config --local gc.auto 0
+2026-11-04T10:31:05.7851028Z ##[endgroup]
+2026-11-04T10:31:05.7852500Z ##[group]Setting up auth
+2026-11-04T10:31:05.7854367Z [command]/usr/bin/git config --local --name-only --get-regexp core\.sshCommand
+2026-11-04T10:31:05.7859534Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :"
+2026-11-04T10:31:05.8063203Z [command]/usr/bin/git config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+2026-11-04T10:31:05.8112481Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :"
+2026-11-04T10:31:05.8497378Z [command]/usr/bin/git config --local --name-only --get-regexp ^includeIf\.gitdir:
+2026-11-04T10:31:05.8541999Z [command]/usr/bin/git submodule foreach --recursive git config --local --show-origin --name-only --get-regexp remote.origin.url
+2026-11-04T10:31:05.8848548Z [command]/usr/bin/git config --local http.https://github.com/.extraheader AUTHORIZATION: basic ***
+2026-11-04T10:31:05.8914552Z ##[endgroup]
+2026-11-04T10:31:05.8916443Z ##[group]Fetching the repository
+2026-11-04T10:31:05.8919639Z [command]/usr/bin/git -c protocol.version=2 fetch --no-tags --prune --no-recurse-submodules --depth=1 origin +13e91bc7a4699d9ff6d2c1c76c82018a28c8bdf9:refs/tags/v0.2.0
+2026-11-04T10:31:06.2155984Z From https://github.com/Hungry-M/dsh-deepseek-import
+2026-11-04T10:31:06.2158416Z  * [new ref]         13e91bc7a4699d9ff6d2c1c76c82018a28c8bdf9 -> v0.2.0
+2026-11-04T10:31:06.2165118Z ##[endgroup]
+2026-11-04T10:31:06.2168474Z ##[group]Determining the checkout info
+2026-11-04T10:31:06.2171217Z ##[endgroup]
+2026-11-04T10:31:06.2172965Z [command]/usr/bin/git sparse-checkout disable
+2026-11-04T10:31:06.2273687Z [command]/usr/bin/git config --local --unset-all extensions.worktreeConfig
+2026-11-04T10:31:06.2320230Z ##[group]Checking out the ref
+2026-11-04T10:31:06.2323501Z [command]/usr/bin/git checkout --progress --force refs/tags/v0.2.0
+2026-11-04T10:31:06.2435413Z Note: switching to 'refs/tags/v0.2.0'.
+2026-11-04T10:31:06.2438512Z 
+2026-11-04T10:31:06.2440315Z You are in 'detached HEAD' state. You can look around, make experimental
+2026-11-04T10:31:06.2443919Z changes and commit them, and you can discard any commits you make in this
+2026-11-04T10:31:06.2447573Z state without impacting any branches by switching back to a branch.
+2026-11-04T10:31:06.2449726Z 
+2026-11-04T10:31:06.2451549Z If you want to create a new branch to retain commits you create, you may
+2026-11-04T10:31:06.2457032Z do so (now or later) by using -c with the switch command. Example:
+2026-11-04T10:31:06.2458709Z 
+2026-11-04T10:31:06.2459274Z   git switch -c <new-branch-name>
+2026-11-04T10:31:06.2460219Z 
+2026-11-04T10:31:06.2460844Z Or undo this operation with:
+2026-11-04T10:31:06.2462201Z 
+2026-11-04T10:31:06.2463074Z   git switch -
+2026-11-04T10:31:06.2463872Z 
+2026-11-04T10:31:06.2465049Z Turn off this advice by setting config variable advice.detachedHead to false
+2026-11-04T10:31:06.2466685Z 
+2026-11-04T10:31:06.2467913Z HEAD is now at 13e91bc test: skip the private SSE sample when it is absent (CI)
+2026-11-04T10:31:06.2473364Z ##[endgroup]
+2026-11-04T10:31:06.2508954Z [command]/usr/bin/git log -1 --format=%H
+2026-11-04T10:31:06.2538360Z 13e91bc7a4699d9ff6d2c1c76c82018a28c8bdf9
+2026-11-04T10:31:06.2953110Z ##[group]Run actions/setup-node@v4
+2026-11-04T10:31:06.2954192Z with:
+2026-11-04T10:31:06.2954923Z   node-version: 24
+2026-11-04T10:31:06.2955852Z   registry-url: https://registry.npmjs.org
+2026-11-04T10:31:06.2956999Z   always-auth: false
+2026-11-04T10:31:06.2957837Z   check-latest: false
+2026-11-04T10:31:06.2968712Z   token: ***
+2026-11-04T10:31:06.2969471Z ##[endgroup]
+2026-11-04T10:31:06.4658605Z (node:2157) [DEP0040] DeprecationWarning: The `punycode` module is deprecated. Please use a userland alternative instead.
+2026-11-04T10:31:06.4665937Z (Use `node --trace-deprecation ...` to show where the warning was created)
+2026-11-04T10:31:06.4669838Z Found in cache @ /opt/hostedtoolcache/node/24.22.2/x64
+2026-11-04T10:31:06.4674166Z ##[group]Environment details
+2026-11-04T10:31:07.1035126Z node: v24.22.2
+2026-11-04T10:31:07.1037914Z npm: 11.19.1
+2026-11-04T10:31:07.1041286Z yarn: 1.22.22
+2026-11-04T10:31:07.1045291Z ##[endgroup]
+2026-11-04T10:31:07.1397062Z ##[group]Run node --version
+2026-11-04T10:31:07.1398419Z [36;1mnode --version[0m
+2026-11-04T10:31:07.1399539Z [36;1mnpm --version[0m
+2026-11-04T10:31:07.1500740Z shell: /usr/bin/bash -e {0}
+2026-11-04T10:31:07.1501922Z env:
+2026-11-04T10:31:07.1503248Z   NPM_CONFIG_USERCONFIG: /home/runner/work/_temp/.npmrc
+2026-11-04T10:31:07.1504835Z   NODE_AUTH_TOKEN: XXXXX-XXXXX-XXXXX-XXXXX
+2026-11-04T10:31:07.1506179Z ##[endgroup]
+2026-11-04T10:31:07.1685090Z v24.22.2
+2026-11-04T10:31:07.2573897Z 11.19.1
+2026-11-04T10:31:07.2766117Z ##[group]Run node verify/test-parser.mjs
+2026-11-04T10:31:07.2768287Z [36;1mnode verify/test-parser.mjs[0m
+2026-11-04T10:31:07.2770364Z [36;1mnode verify/test-merge.mjs[0m
+2026-11-04T10:31:07.2772319Z [36;1mnode verify/smoke.mjs[0m
+2026-11-04T10:31:07.2829864Z shell: /usr/bin/bash -e {0}
+2026-11-04T10:31:07.2830951Z env:
+2026-11-04T10:31:07.2832015Z   NPM_CONFIG_USERCONFIG: /home/runner/work/_temp/.npmrc
+2026-11-04T10:31:07.2833781Z   NODE_AUTH_TOKEN: XXXXX-XXXXX-XXXXX-XXXXX
+2026-11-04T10:31:07.2835049Z ##[endgroup]
+2026-11-04T10:31:07.3262808Z PASS  思考与正文分流
+2026-11-04T10:31:07.3267137Z SKIP  真实样本（samples/sse-sample.txt 不在仓库里）
+2026-11-04T10:31:07.3270943Z PASS  SET 覆盖而不是追加
+2026-11-04T10:31:07.3272429Z 
+2026-11-04T10:31:07.3273991Z 全部通过
+2026-11-04T10:31:07.3612087Z PASS  按 message_id 合并两页（向上翻页不丢老页）
+2026-11-04T10:31:07.3616093Z PASS  短窗口不覆盖长窗口
+2026-11-04T10:31:07.3618945Z PASS  同 id 取内容更全的一版
+2026-11-04T10:31:07.3621721Z PASS  无 id 时按重叠拼接
+2026-11-04T10:31:07.3624516Z PASS  无 id 且不重叠时拼在前面
+2026-11-04T10:31:07.3627080Z PASS  混合来源按锚点插入
+2026-11-04T10:31:07.3628525Z 
+2026-11-04T10:31:07.3629629Z 全部通过
+2026-11-04T10:31:07.4465404Z 
+2026-11-04T10:31:07.4468565Z 目标工作区：smoke  /tmp/dsh-smoke-p2AI2d/workspace
+2026-11-04T10:31:07.4472023Z 待导入对话：1 个
+2026-11-04T10:31:07.4473628Z 
+2026-11-04T10:31:07.4583129Z ✓ 引用测试  (15 事件, 1 轮)
+2026-11-04T10:31:07.4588840Z   思考过程 → /tmp/dsh-smoke-p2AI2d/workspace/.dsh-imported/session-73283f08-1b6e-4f20-98b3-66e007589f14/thinking.md
+2026-11-04T10:31:07.4596067Z   联网引用 → /tmp/dsh-smoke-p2AI2d/workspace/.dsh-imported/session-73283f08-1b6e-4f20-98b3-66e007589f14/references.md
+2026-11-04T10:31:07.4603731Z 
+2026-11-04T10:31:07.4606200Z 已注册到 workspace.json（备份：workspace.json.bak-20261104103107）
+2026-11-04T10:31:07.4608695Z 
+2026-11-04T10:31:07.4610262Z 完成：1 个会话已写入 /tmp/dsh-smoke-p2AI2d/home/sessions
+2026-11-04T10:31:07.4614076Z 请完全退出并重启 DeepSeek Harness（它只在启动时读 workspace.json），然后到左侧该工作区的会话列表里查看。
+2026-11-04T10:31:07.4617006Z fixture: samples/fixture-references.json
+2026-11-04T10:31:07.4618684Z PASS  第一帧只有 header 一行
+2026-11-04T10:31:07.4620759Z PASS  每条记录一帧
+2026-11-04T10:31:07.4622887Z PASS  seq 连续
+2026-11-04T10:31:07.4625098Z PASS  有 user/message
+2026-11-04T10:31:07.4627445Z PASS  system 头恰好一条 (实际 1)
+2026-11-04T10:31:07.4630329Z PASS  system 是 surface 的第一个节点 (实际 system/message)
+2026-11-04T10:31:07.4633470Z PASS  追加 system/message 不破坏不变量
+2026-11-04T10:31:07.4635977Z PASS  生成了 .dsh-imported 目录
+2026-11-04T10:31:07.4637669Z 
+2026-11-04T10:31:07.4638781Z 全部通过
+2026-11-04T10:31:07.4770326Z ##[group]Run npm publish --access public --provenance
+2026-11-04T10:31:07.4771959Z [36;1mnpm publish --access public --provenance[0m
+2026-11-04T10:31:07.4831510Z shell: /usr/bin/bash -e {0}
+2026-11-04T10:31:07.4832718Z env:
+2026-11-04T10:31:07.4833789Z   NPM_CONFIG_USERCONFIG: /home/runner/work/_temp/.npmrc
+2026-11-04T10:31:07.4835282Z   NODE_AUTH_TOKEN: XXXXX-XXXXX-XXXXX-XXXXX
+2026-11-04T10:31:07.4836561Z ##[endgroup]
+2026-11-04T10:31:08.7525265Z npm warn Unknown user config "always-auth". This will stop working in the next major version of npm. See `npm help npmrc` for supported config options.
+2026-11-04T10:31:08.9629839Z npm warn publish npm auto-corrected some errors in your package.json when publishing.  Please run "npm pkg fix" to address these errors.
+2026-11-04T10:31:08.9631472Z npm warn publish errors corrected:
+2026-11-04T10:31:08.9661655Z npm warn publish "bin[dsh-import]" script name dsh-import.mjs was invalid and removed
+2026-11-04T10:31:08.9690038Z npm notice
+2026-11-04T10:31:08.9713810Z npm notice 📦  dsh-deepseek-import@0.2.0
+2026-11-04T10:31:08.9733168Z npm notice Tarball Contents
+2026-11-04T10:31:08.9747562Z npm notice 1.1kB LICENSE
+2026-11-04T10:31:08.9763237Z npm notice 11.6kB README.md
+2026-11-04T10:31:08.9763825Z npm notice 15.6kB README.zh.md
+2026-11-04T10:31:08.9764439Z npm notice 2.5kB audit-imports.mjs
+2026-11-04T10:31:08.9765045Z npm notice 89B cordis.patch.yml
+2026-11-04T10:31:08.9765694Z npm notice 13.2kB dsh-import-tui.mjs
+2026-11-04T10:31:08.9766297Z npm notice 2.0kB dsh-import.cmd
+2026-11-04T10:31:08.9766879Z npm notice 50.3kB dsh-import.mjs
+2026-11-04T10:31:08.9767533Z npm notice 6.8kB edge-extension/background.js
+2026-11-04T10:31:08.9768263Z npm notice 26.0kB edge-extension/content.js
+2026-11-04T10:31:08.9768946Z npm notice 6.6kB edge-extension/inject.js
+2026-11-04T10:31:08.9769632Z npm notice 972B edge-extension/manifest.json
+2026-11-04T10:31:08.9770332Z npm notice 6.1kB edge-extension/merge.js
+2026-11-04T10:31:08.9771060Z npm notice 3.4kB edge-extension/popup.css
+2026-11-04T10:31:08.9771764Z npm notice 3.8kB edge-extension/popup.html
+2026-11-04T10:31:08.9772425Z npm notice 22.3kB edge-extension/popup.js
+2026-11-04T10:31:08.9773352Z npm notice 3.5kB edge-extension/stream-parser.js
+2026-11-04T10:31:08.9773965Z npm notice 543B icon.svg
+2026-11-04T10:31:08.9774431Z npm notice 3.7kB index.js
+2026-11-04T10:31:08.9774951Z npm notice 174B locale/en.json
+2026-11-04T10:31:08.9775560Z npm notice 162B locale/zh.json
+2026-11-04T10:31:08.9776111Z npm notice 6.1kB move-session.mjs
+2026-11-04T10:31:08.9776766Z npm notice 1.5kB package.json
+2026-11-04T10:31:08.9783231Z npm notice 3.5kB remove-session.mjs
+2026-11-04T10:31:08.9783870Z npm notice 7.6kB repair-session.mjs
+2026-11-04T10:31:08.9784513Z npm notice Tarball Details
+2026-11-04T10:31:08.9801365Z npm notice name: dsh-deepseek-import
+2026-11-04T10:31:08.9824468Z npm notice version: 0.2.0
+2026-11-04T10:31:08.9843372Z npm notice filename: dsh-deepseek-import-0.2.0.tgz
+2026-11-04T10:31:08.9863408Z npm notice package size: 64.8 kB
+2026-11-04T10:31:08.9873372Z npm notice unpacked size: 199.0 kB
+2026-11-04T10:31:08.9883497Z npm notice shasum: e7f24720871d9897abc2c8d885b32f7228611c44
+2026-11-04T10:31:08.9896111Z npm notice integrity: sha512-Foi6nfDeeK4X8[...]ByURfrY9k0NgA==
+2026-11-04T10:31:08.9903159Z npm notice total files: 25
+2026-11-04T10:31:08.9913340Z npm notice
+2026-11-04T10:31:09.9625105Z npm notice npm tokens that bypass 2FA are being restricted for account changes and direct publishing. Learn how to prepare: https://gh.io/npm-gat-bypass2fa-deprecation
+2026-11-04T10:31:10.0826379Z npm notice Publishing to https://registry.npmjs.org/ with tag latest and public access
+2026-11-04T10:31:10.6619015Z npm notice publish Signed provenance statement with source and build information from GitHub Actions
+2026-11-04T10:31:10.6621150Z npm notice publish Provenance statement published to transparency log: https://search.sigstore.dev/?logIndex=3688495893
+2026-11-04T10:31:11.9600420Z npm error code E422
+2026-11-04T10:31:11.9617865Z npm error 422 Unprocessable Entity - PUT https://registry.npmjs.org/dsh-deepseek-import - Error verifying sigstore provenance bundle: Unsupported GitHub Actions source repository visibility: "private". Only public source repositories are supported when publishing with provenance.
+2026-11-04T10:31:11.9641369Z npm error A complete log of this run can be found in: /home/runner/.npm/_logs/2026-11-04T10_31_07_560Z-debug-0.log
+2026-11-04T10:31:12.0043156Z ##[error]Process completed with exit code 1.
+2026-11-04T10:31:12.0203346Z Post job cleanup.
+2026-11-04T10:31:12.1215597Z [command]/usr/bin/git version
+2026-11-04T10:31:12.1324358Z git version 2.56.0
+2026-11-04T10:31:12.1406920Z Temporarily overriding HOME='/home/runner/work/_temp/98fe3a8c-edbd-4406-89c5-419ff32fccb1' before making global git config changes
+2026-11-04T10:31:12.1423844Z Adding repository directory to the temporary git global config as a safe directory
+2026-11-04T10:31:12.1474180Z [command]/usr/bin/git config --global --add safe.directory /home/runner/work/dsh-deepseek-import/dsh-deepseek-import
+2026-11-04T10:31:12.1510808Z [command]/usr/bin/git config --local --name-only --get-regexp core\.sshCommand
+2026-11-04T10:31:12.1564959Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :"
+2026-11-04T10:31:12.1971879Z [command]/usr/bin/git config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+2026-11-04T10:31:12.2021338Z http.https://github.com/.extraheader
+2026-11-04T10:31:12.2053132Z [command]/usr/bin/git config --local --unset-all http.https://github.com/.extraheader
+2026-11-04T10:31:12.2153142Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :"
+2026-11-04T10:31:12.2615719Z [command]/usr/bin/git config --local --name-only --get-regexp ^includeIf\.gitdir:
+2026-11-04T10:31:12.2639468Z [command]/usr/bin/git submodule foreach --recursive git config --local --show-origin --name-only --get-regexp remote.origin.url
+2026-11-04T10:31:12.3122387Z Cleaning up orphan processes
+2026-11-04T10:31:12.3530034Z ##[warning]Node.js 20 is deprecated. The following actions target Node.js 20 but are being forced to run on Node.js 24: actions/checkout@v4, actions/setup-node@v4. For more information see: https://github.blog/changelog/2025-09-19-deprecation-of-node-20-on-github-actions-runners/

@@ -39,5 +39,6 @@ jobs:
           node verify/test-merge.mjs
           node verify/smoke.mjs
 
+      # 注意：--provenance 要求源仓库是公开的；私有仓会被 422 拒绝
       - name: Publish
-        run: npm publish --access public --provenance
+        run: npm publish --access public
