@@ -54,7 +54,7 @@ Double-click **`dsh-import.cmd`** in the workspace (or drop JSON files onto it).
 
 - Lists your DSH workspaces; pick one by number
 - Each conversation becomes one session: title, order and body (including code blocks and tables) are preserved
-- **Attachments** (images, txt, pdf, docx…) that can be downloaded are saved under `<workspace>/.dsh-imported/<sessionId>/` with their original names; anything that cannot be downloaded degrades to `[附件未下载：name (size) 原链接]`
+- **Attachments** (images, txt, pdf, docx…): saved under `<workspace>/.dsh-imported/<sessionId>/` with their original names **only when the data source carries them**; anything that cannot be downloaded degrades to `[附件未下载：name (size) 原链接]`. DeepSeek's IndexedDB cache copy usually carries no attachments
 - **Thinking** goes to `thinking.md` in the same folder (never injected into the context)
 - **Edited / regenerated versions**: only the selected branch stays in the body, all versions go to `revisions.md`
 - **Interrupted outputs** keep only a numbered placeholder (`[中断输出 #27：未产生完整正文…]`); add `--keep-interrupted` to keep the partial text

@@ -424,7 +424,7 @@ function sidecarDir(workspacePath, sessionId) {
     const ignore = path.join(root, '.gitignore');
     if (!fs.existsSync(ignore)) {
       try {
-        fs.writeFileSync(ignore, '# DSH 导入存档（思考 / 引用 / 全文 / 附件）\n*\n');
+        fs.writeFileSync(ignore, '# DSH 导入存档（思考 / 全文 / 多版本；数据源带引用或附件时另存）\n*\n');
       } catch {
         /* 没有写权限就算了 */
       }
