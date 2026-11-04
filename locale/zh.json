@@ -1,0 +1,6 @@
+{
+  "meta": {
+    "title": "DeepSeek 对话导入",
+    "description": "把 Edge 扩展导出的 DeepSeek 网页对话重建为 DeepSeek Harness 会话。"
+  }
+}

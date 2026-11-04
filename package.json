@@ -1,14 +1,37 @@
 {
   "name": "dsh-deepseek-import",
-  "version": "0.1.2",
-  "description": "DeepSeek web chat → DeepSeek Harness sessions (Edge extension + importer CLI)",
+  "version": "0.2.0",
+  "description": "DeepSeek web chat → DeepSeek Harness sessions (Edge extension + importer CLI + DSH plugin)",
   "type": "module",
   "license": "MIT",
   "author": "Hungry-M",
   "bin": {
     "dsh-import": "./dsh-import.mjs"
   },
+  "exports": {
+    ".": "./index.js",
+    "./locale/*.json": "./locale/*.json",
+    "./icon": "./icon.svg",
+    "./package.json": "./package.json"
+  },
+  "dsh": {
+    "bundle": {
+      "patch": "./cordis.patch.yml"
+    }
+  },
+  "peerDependencies": {
+    "@deepseek-ai/dsh-tools": "*"
+  },
+  "peerDependenciesMeta": {
+    "@deepseek-ai/dsh-tools": {
+      "optional": true
+    }
+  },
   "files": [
+    "index.js",
+    "cordis.patch.yml",
+    "locale/*.json",
+    "icon.svg",
     "dsh-import.mjs",
     "dsh-import-tui.mjs",
     "dsh-import.cmd",

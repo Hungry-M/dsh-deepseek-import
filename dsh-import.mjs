@@ -1162,7 +1162,7 @@ async function main() {
  * 供 TUI / 其它程序调用：不解析命令行，直接指定文件与工作区。
  * 返回 { workspace, created }。
  */
-export async function runImport({ files, workspacePath = null, dryRun = false, register = true, thinking = false, only = null, keepAll = false, keepInterrupted = false, fromIndex = null, fromMatch = null }) {
+export async function runImport({ files, workspacePath = null, dryRun = false, register = true, thinking = false, only = null, keepAll = false, keepInterrupted = false, fromIndex = null, fromMatch = null, tail = null }) {
   opts.files = [...files];
   opts.workspace = workspacePath;
   opts.dryRun = dryRun;
@@ -1173,6 +1173,7 @@ export async function runImport({ files, workspacePath = null, dryRun = false, r
   opts.keepInterrupted = keepInterrupted;
   opts.fromIndex = fromIndex;
   opts.fromMatch = fromMatch;
+  opts.tail = Number.isInteger(tail) && tail > 0 ? tail : undefined;
   opts.list = false;
   opts.json = false;
   return main();

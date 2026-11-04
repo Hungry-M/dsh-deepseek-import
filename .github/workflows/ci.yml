@@ -34,6 +34,7 @@ jobs:
         run: |
           node verify/test-parser.mjs
           node verify/test-merge.mjs
+          node verify/test-plugin.mjs
 
       - name: End-to-end smoke
         run: node verify/smoke.mjs

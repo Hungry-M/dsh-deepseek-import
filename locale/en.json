@@ -1,0 +1,6 @@
+{
+  "meta": {
+    "title": "DeepSeek Chat Import",
+    "description": "Rebuild DeepSeek web conversations exported by the Edge extension as DeepSeek Harness sessions."
+  }
+}

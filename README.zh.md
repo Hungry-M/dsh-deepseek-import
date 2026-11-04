@@ -16,7 +16,6 @@ Edge 扩展  ──导出──▶  dsh-deepseek-*.json  ──dsh-import.cmd─
 # 从 npm（发布后）
 npm i -g dsh-deepseek-import
 dsh-import --list
-
 # 或直接用源码，不装全局
 git clone https://github.com/Hungry-M/dsh-deepseek-import.git
 cd dsh-deepseek-import
@@ -24,6 +23,20 @@ node dsh-import.mjs --list
 ```
 
 扩展必须单独加载（见下一节）——浏览器扩展没法随 npm 包一起装。
+
+### 作为 DSH 插件安装（可选）
+
+同一个包也是 DSH 的 Host 插件，装上后可以直接在对话里让模型导入：
+
+```
+dsh plugin add dsh-deepseek-import
+```
+
+它会注册工具 `import_deepseek_chat`，之后一句话就行：
+
+> 把 `D:\Downloads\dsh-import\dsh-deepseek-20261103.json` 导入到当前工作区
+
+插件只负责「导入」，**扩展仍需单独加载**。新会话在侧栏下次刷新时出现；若没出现，重启 DSH。
 
 ## 一、安装扩展（一次性）
 
