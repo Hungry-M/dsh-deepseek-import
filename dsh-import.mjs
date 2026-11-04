@@ -86,6 +86,7 @@ function parseArgs(argv) {
     else if (arg === '--tail') opts.tail = Number(argv[++i]);
     else if (arg === '--no-auto-trim') opts.autoTrim = false;
     else if (arg === '--no-system-head') opts.noSystemHead = true;
+    else if (arg === '--no-acl-fix') opts.noAclFix = true;
     else if (arg === '--audit') opts.audit = true;
     else if (arg === '--repair') { opts.audit = true; opts.applyRepair = true; }
     else if (arg === '--no-sidecar' || arg === '--sidecar') opts.noSidecar = true;
@@ -904,6 +905,35 @@ function writeTranscript(conversation, workspacePath, sessionId) {
 
 // ---------------------------------------------------------------- 主流程
 
+/**
+ * 确保当前用户在目标工作区上拥有「完全控制」。
+ *
+ * 为什么需要：DSH 沙箱每次运行都要往工作区写一条针对本次受限 SID 的授权，
+ * 这要求目录本身带 WRITE_DAC / WRITE_OWNER。而新建的目录通常只从父目录继承
+ * 「Authenticated Users: 修改」——不含这两项——于是授权写入直接失败
+ * （SetNamedSecurityInfoW Win32 5），表现为打开会话后所有命令都报 grantWrite。
+ *
+ * 导入时顺手补一条可继承的完全控制，用户就不必先撞一次错误再回来修。
+ * 这是用户自己的进程在跑，不是受限令牌，所以能改（目录 owner 有隐式 WRITE_DAC）。
+ */
+function ensureWorkspaceAcl(dir) {
+  if (process.platform !== 'win32' || opts.noAclFix) return;
+  try {
+    const user = execFileSync('whoami', { encoding: 'utf8' }).trim();
+    const listing = execFileSync('icacls', [dir], { encoding: 'utf8' });
+    const already = listing
+      .split('\n')
+      .some((line) => line.toUpperCase().includes(user.toUpperCase()) && /\(F\)/.test(line));
+    if (already) return;
+    execFileSync('icacls', [dir, '/grant', `${user}:(OI)(CI)F`], { stdio: 'ignore' });
+    console.log(`  已为工作区补写完全控制权限（DSH 沙箱需要）：${dir}`);
+  } catch (error) {
+    console.warn(`  无法自动补写工作区权限：${error.message}`);
+    console.warn(`  若打开会话时报 grantWrite，请手动执行：`);
+    console.warn(`    icacls "${dir}" /grant "${process.env.USERNAME}:(OI)(CI)F"`);
+  }
+}
+
 async function main() {
   if (opts.audit) {
     const { auditSessions } = await import('./repair-session.mjs');
@@ -958,6 +988,8 @@ async function main() {
     console.error(`工作区目录不存在：${target.path}`);
     process.exit(1);
   }
+
+  ensureWorkspaceAcl(target.path);
 
   const files = expandFiles(opts.files);
   if (!files.length) {

@@ -64,3 +64,4 @@ npm view dsh-deepseek-import dist-tags
 | `ERE SOLVE` 装不上 | peer 范围排除了预发布版本 | 用 `>=0.0.0-0` 这类带预发布分支的范围 |
 | 测试在 CI 挂、本地过 | 依赖了未提交的私有样本 | 样本缺失时 SKIP |
 | 新会话侧栏不出现 | `workspace.json` 启动时读取 | 重启 DSH |
+| 打开会话报 `grantWrite` | 工作区目录缺写入权限（新建目录只从父目录继承「修改」，不含改权限） | 0.2.4 起导入时自动补齐；旧目录手动 `icacls <目录> /grant "<用户>:(OI)(CI)F"` |
