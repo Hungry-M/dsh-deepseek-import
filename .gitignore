@@ -27,3 +27,11 @@ Thumbs.db
 # 临时
 *.tmp
 *.bak
+
+# CI 日志与临时产物
+.ci-log*
+device.log
+device.err
+gcm-trace.log
+.tmp-*
+
