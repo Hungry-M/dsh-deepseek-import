@@ -21,6 +21,7 @@ const PARAMETERS = {
   file: {
     type: 'string',
     description: 'Absolute path to a dsh-deepseek-*.json export. Renamed exports are recognised by their content.',
+    required: true,
   },
   workspace: {
     type: 'string',
@@ -58,7 +59,7 @@ async function resolveDefineTool() {
     const required = [];
     for (const [key, spec] of Object.entries(options.parameters || {})) {
       properties[key] = { type: spec.type, description: spec.description };
-      if (spec.required !== false) required.push(key);
+      if (spec.required === true) required.push(key);
     }
     return {
       ...options,
