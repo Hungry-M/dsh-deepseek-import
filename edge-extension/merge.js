@@ -16,8 +16,25 @@
     return (message?.content || '').length + (message?.thinking || '').length;
   }
 
+  /** 同一消息的两份副本：正文取更全的，附件取并集 */
+  function unionFiles(a, b) {
+    const merged = [];
+    const seen = new Set();
+    for (const file of [...(a || []), ...(b || [])]) {
+      const key = file?.dataUrl ? String(file.dataUrl).slice(0, 64) : file?.url || file?.name;
+      if (!key || seen.has(key)) continue;
+      seen.add(key);
+      merged.push(file);
+    }
+    return merged;
+  }
+
   function richer(a, b) {
-    return score(b) > score(a) ? b : a;
+    if (!a) return b;
+    if (!b) return a;
+    const winner = score(b) > score(a) ? b : a;
+    const files = unionFiles(a.files, b.files);
+    return files.length ? { ...winner, files } : winner;
   }
 
   function keyOf(message) {

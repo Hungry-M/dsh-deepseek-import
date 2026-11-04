@@ -437,11 +437,31 @@
     try {
       const cached = await readCachedHistory();
       if (cached.ok && cached.messages?.length) {
-        pushCapture(cached.messages);
+        // 缓存里没有附件（DeepSeek 不把 files 写进 IndexedDB）。
+        // 当前屏幕上已渲染的消息能拿到 <img>，按「角色+正文完全相同」贴回去，
+        // 只做并集、不新增消息，避免重复。
+        let withFiles = cached.messages;
+        try {
+          const domMessages = domExtract().messages || [];
+          const byKey = new Map(withFiles.map((m) => [`${m.role}|${String(m.content || '').trim()}`, m]));
+          let attached = 0;
+          for (const domMessage of domMessages) {
+            if (!(domMessage.files || []).length) continue;
+            const target = byKey.get(`${domMessage.role}|${String(domMessage.content || '').trim()}`);
+            if (!target) continue;
+            target.files = [...(target.files || []), ...domMessage.files];
+            attached += domMessage.files.length;
+          }
+          if (attached) withFiles = [...withFiles];
+        } catch {
+          /* DOM 读不到就维持原样 */
+        }
+
+        pushCapture(withFiles);
         return {
           ok: true,
           source: 'cache',
-          messages: cached.messages,
+          messages: withFiles,
           rounds: 0,
           captures: 1,
           delta: 0,
