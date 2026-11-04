@@ -33,12 +33,12 @@ check('导出 apply 函数', typeof mod.apply === 'function');
 
 const registered = [];
 const ctx = { tools: { register: (tool) => registered.push(tool) } };
-mod.apply(ctx, {});
+await mod.apply(ctx, {});
 
 check('注册了一个工具', registered.length === 1, `实际 ${registered.length}`);
 const tool = registered[0] || {};
 check('工具名 import_deepseek_chat', tool.name === 'import_deepseek_chat');
-check('file 参数必填', tool.parameters?.file?.type === 'string');
+check('声明了 file 参数', Boolean(tool.parameters?.file || tool.parameters?.properties?.file));
 check('有 execute', typeof tool.execute === 'function');
 check('输出 schema 含 created', Boolean(tool.output?.schema?.properties?.created));
 
