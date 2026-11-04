@@ -85,6 +85,7 @@ function parseArgs(argv) {
     else if (arg === '--keep-interrupted') opts.keepInterrupted = true;
     else if (arg === '--tail') opts.tail = Number(argv[++i]);
     else if (arg === '--no-auto-trim') opts.autoTrim = false;
+    else if (arg === '--no-system-head') opts.noSystemHead = true;
     else if (arg === '--no-sidecar' || arg === '--sidecar') opts.noSidecar = true;
     else if (arg === '--sidecar-dir') opts.sidecarDir = argv[++i];
     else if (arg === '--context-window') opts.contextWindow = Number(argv[++i]) || null;
@@ -361,6 +362,9 @@ function conversationsOf(file) {
 }
 
 // ---------------------------------------------------------------- 生成会话
+
+const IMPORT_SYSTEM_NOTE =
+  '本会话的历史来自 DeepSeek 网页对话的导入，以下消息为用户与助手的原始记录，顺序与原文一致。';
 
 const DATA_URL = /^data:([^;,]+);base64,(.*)$/s;
 const MIME_EXT = {
@@ -706,6 +710,21 @@ function buildEvents(conversation, workspacePath, sessionId) {
         });
       }
       push('step/start', { turn, step });
+      // v4 不变量：surface 的第 0 个节点必须是受保护的 system 头。
+      // 导入的历史前面没有 system/message 时，会话能打开，但一旦继续对话、
+      // 运行时追加自己的 system/message 就会被校验器判为损坏。
+      if (turn === 1 && !opts.noSystemHead) {
+        push('system/message', {
+          turn,
+          step,
+          message: {
+            role: 'system',
+            content: [{ type: 'text', text: IMPORT_SYSTEM_NOTE }],
+            source: { kind: 'system-prompt' },
+            id: crypto.randomUUID(),
+          },
+        }, { surfaceOp: 'append' });
+      }
       const seqNow = seq;
       // 只在第一条用户消息尾部附上存档索引
       if (sidecarNote && firstUserSeq === undefined) text += sidecarNote;
