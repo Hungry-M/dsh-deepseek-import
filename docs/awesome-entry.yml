@@ -1,0 +1,17 @@
+# 提交到 awesome-dsh-plugin 的条目（草稿）
+#
+# 目标路径：data/plugins/Hungry-M__dsh-deepseek-import.yml
+# 提交前请确认：
+#   1. 仓库已转为公开（CI 会从仓库抓 package.json 验证 dsh.bundle）
+#   2. 仓库已加 dsh-plugin topic
+#   3. 仓库创建满 1 天（2026-11-03 15:51 起算）
+#
+# 提交方式：fork awesome-dsh-plugin/awesome-dsh-plugin → 加这一个文件 → 发 PR
+
+url: https://github.com/Hungry-M/dsh-deepseek-import
+name: Hungry-M/dsh-deepseek-import
+category: session
+icon: https://raw.githubusercontent.com/Hungry-M/dsh-deepseek-import/main/assets/icon-180.png
+description:
+  en: Imports DeepSeek web chat exports into DeepSeek Harness as new sessions, saving thinking and the full transcript as sidecar files.
+  zh: 把 DeepSeek 网页对话导出后重建为 DeepSeek Harness 会话，思考与完整原文作为旁挂文件保存。
