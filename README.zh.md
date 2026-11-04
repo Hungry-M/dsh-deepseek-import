@@ -225,6 +225,8 @@ node check-sessions.mjs
 
 ## 已知限制
 
+- **引用与附件取决于数据源**：DeepSeek 的 IndexedDB 缓存副本只保留正文和思考，`references` 表与 `files` 字段通常不在里面。因此 `references.md` 和附件目录**只在数据源带这两类数据时才会生成**，没有生成是正常结果，不是失败。想找回图片只能回原网页另存。
+
 - **思考过程旁挂**：写进 `thinking.md`，不进上下文。DSH 的 reasoning 块带 provider 签名，硬塞正文会污染后续请求；想看时直接翻文件，或加 `--thinking` 强制内联。
 - **附件不进 DSH 附件库**：DSH 的图片是内容寻址附件（`~/.dsh/attachments/v1/objects/...`），伪造引用有损坏历史的风险；这里改为落盘 + 路径引用，模型可以用工具读。拿不到下载地址时只留文件名与大小。
 - **正文完整性**：历史接口 `/api/v0/chat/history_messages` 返回的正文可能偏短；回答生成时的 `/api/v0/chat/completion` 是 `text/event-stream` 补丁流（`THINK` 片段=思考，其余片段=正文），扩展会边读边拼，生成完即写入捕获。所以**新回答**是完整的；很久以前的老回答以历史接口返回的内容为准。

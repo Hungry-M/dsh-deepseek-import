@@ -188,6 +188,8 @@ Open the conversation and click **Capture chat**; then check the "来源" (sourc
 
 ## Known limitations
 
+- **Citations and attachments depend on the data source**: DeepSeek's IndexedDB cache copy keeps the body and thinking only; the `references` table and `files` field are usually absent. `references.md` and the attachment folder are therefore created **only when the source carries them** — their absence is a normal result, not a failure.
+
 - **Thinking is archived, not inlined**: DSH reasoning blocks carry provider signatures; faking them would poison later requests. Read `thinking.md`, or force inline with `--thinking`.
 - **Attachments are not added to DSH's attachment store**: they are written to disk and referenced by path. When no download URL is available only the name and size survive.
 - **Web-search citations**: the cache record has no `references` table, so `[reference:N]` markers stay as plain text with no links.
