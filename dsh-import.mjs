@@ -294,8 +294,9 @@ async function pickWorkspace(workspaces) {
     // 但用户不必再为了「导入到一个新目录」先去界面里加一次工作区。
     const abs = path.resolve(opts.workspace);
     if (!fs.existsSync(abs)) {
-      console.error(`工作区目录不存在：${abs}`);
-      process.exit(1);
+      // 允许直接指定一个还不存在的目录，导入时顺手建出来（相当于 mkdir -p）
+      fs.mkdirSync(abs, { recursive: true });
+      console.log(`  已创建目录：${abs}`);
     }
     const id = crypto.randomUUID();
     const backup = `${WORKSPACE_STORE}.bak-${new Date().toISOString().replace(/[-:T]/g, '').slice(0, 14)}`;
