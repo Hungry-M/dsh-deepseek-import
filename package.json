@@ -1,6 +1,6 @@
 {
   "name": "dsh-deepseek-import",
-  "version": "0.2.7",
+  "version": "0.3.0",
   "description": "DeepSeek web chat → DeepSeek Harness sessions (Edge extension + importer CLI + DSH plugin)",
   "type": "module",
   "license": "MIT",
@@ -38,6 +38,7 @@
     "move-session.mjs",
     "remove-session.mjs",
     "repair-session.mjs",
+    "doctor.mjs",
     "audit-imports.mjs",
     "edge-extension/",
     "README.md",

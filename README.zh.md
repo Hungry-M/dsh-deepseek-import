@@ -135,6 +135,7 @@ node dsh-import.mjs 导出.json --from-match "某句话"     # 从匹配到的�
 node dsh-import.mjs 导出.json --from-index 157         # 按消息序号分支
 node dsh-import.mjs --audit                            # 体检已导入会话（system 头是否完好）
 node dsh-import.mjs --repair                           # 批量修掉有隐患的会话
+node dsh-import.mjs --doctor                           # 体检：环境 / 工作区 / 会话 / 权限
 
 > --tail 与 --from-index/--from-match 互斥（一个是取最后 N 轮，一个是从指定位置开始），同时给出会直接报错退出；--from-* 只能用于单个对话。
 ```
@@ -239,6 +240,7 @@ node check-sessions.mjs
 ## 已知限制
 
 - **引用与附件取决于数据源**：DeepSeek 的 IndexedDB 缓存副本只保留正文和思考，`references` 表与 `files` 字段通常不在里面。因此 `references.md` 和附件目录**只在数据源带这两类数据时才会生成**，没有生成是正常结果，不是失败。想找回图片只能回原网页另存。
+- **导入的会话在侧栏先显示「未命名」**：DSH 的会话列表只读 header 与投影缓存，不会为了显示标题去打开冷会话的日志。新导入的会话还没有投影缓存，所以标题为空；**打开一次即恢复正常**，之后一直是正常的。这不是导入丢了标题——`session/title` 事件确实写在日志里。`--doctor` 会列出这类会话的数量。
 
 - **思考过程旁挂**：写进 `thinking.md`，不进上下文。DSH 的 reasoning 块带 provider 签名，硬塞正文会污染后续请求；想看时直接翻文件，或加 `--thinking` 强制内联。
 - **附件不进 DSH 附件库**：DSH 的图片是内容寻址附件（`~/.dsh/attachments/v1/objects/...`），伪造引用有损坏历史的风险；这里改为落盘 + 路径引用，模型可以用工具读。拿不到下载地址时只留文件名与大小。

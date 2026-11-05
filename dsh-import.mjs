@@ -87,6 +87,7 @@ function parseArgs(argv) {
     else if (arg === '--no-auto-trim') opts.autoTrim = false;
     else if (arg === '--no-system-head') opts.noSystemHead = true;
     else if (arg === '--no-acl-fix') opts.noAclFix = true;
+    else if (arg === '--doctor') opts.doctor = true;
     else if (arg === '--audit') opts.audit = true;
     else if (arg === '--repair') { opts.audit = true; opts.applyRepair = true; }
     else if (arg === '--no-sidecar' || arg === '--sidecar') opts.noSidecar = true;
@@ -980,6 +981,12 @@ function ensureWorkspaceAcl(dir) {
 }
 
 async function main() {
+  if (opts.doctor) {
+    const { runDoctor } = await import('./doctor.mjs');
+    const result = runDoctor({ json: opts.json === true });
+    return { doctor: result };
+  }
+
   if (opts.audit) {
     const { auditSessions } = await import('./repair-session.mjs');
     auditSessions({ dryRun: opts.dryRun, apply: opts.applyRepair === true });

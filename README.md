@@ -143,6 +143,7 @@ Imports from `0.1.0` predate that fix and would break the moment you kept chatti
 ```powershell
 node dsh-import.mjs --audit     # report only
 node dsh-import.mjs --repair    # insert/move the head, resequence, drop the projection cache
+node dsh-import.mjs --doctor    # environment / workspaces / sessions / permissions
 ```
 
 - `--from-match` does a case-insensitive substring match over **user messages**, first hit wins
@@ -189,6 +190,7 @@ Open the conversation and click **Capture chat**; then check the "来源" (sourc
 ## Known limitations
 
 - **Citations and attachments depend on the data source**: DeepSeek's IndexedDB cache copy keeps the body and thinking only; the `references` table and `files` field are usually absent. `references.md` and the attachment folder are therefore created **only when the source carries them** — their absence is a normal result, not a failure.
+- **Imported sessions show "Untitled" in the sidebar first**: the session list reads only the header and the projection cache — it never opens a cold log just to display a title. A freshly imported session has no cache yet, so the title is blank; **opening it once restores the title permanently**. The `session/title` event is in the log; nothing was lost. `--doctor` reports how many sessions are in this state.
 
 - **Thinking is archived, not inlined**: DSH reasoning blocks carry provider signatures; faking them would poison later requests. Read `thinking.md`, or force inline with `--thinking`.
 - **Attachments are not added to DSH's attachment store**: they are written to disk and referenced by path. When no download URL is available only the name and size survive.
