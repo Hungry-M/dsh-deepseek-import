@@ -4,6 +4,10 @@ English | [中文](README.zh.md)
 
 Capture conversations from **Edge** on `chat.deepseek.com` (one or many), export them as JSON, then rebuild them as resumable **DeepSeek Harness** sessions.
 
+> **Status**: `0.x`, pre-release — data formats and CLI flags may change.
+> **Unofficial**: not affiliated with or endorsed by DeepSeek or DeepSeek Harness.
+> Licensed [MIT](LICENSE); see [CONTRIBUTING.md](CONTRIBUTING.md) and [SECURITY.md](SECURITY.md).
+
 ```
 Edge extension  ──export──▶  dsh-deepseek-*.json  ──dsh-import.cmd──▶  ~/.dsh/sessions + workspace.json
 ```

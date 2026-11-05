@@ -4,6 +4,10 @@
 
 从 **Edge** 抓取 `chat.deepseek.com` 的对话（单个或多个），导出 JSON，再由本地脚本重建为 DeepSeek Harness 的可继续会话。
 
+> **状态**：`0.x` 内测阶段，数据格式与 CLI 参数仍可能变化。
+> **非官方项目**：与 DeepSeek、DeepSeek Harness 官方无关，未获其背书。
+> 许可证 [MIT](LICENSE)；贡献方式见 [CONTRIBUTING.md](CONTRIBUTING.md)；安全问题见 [SECURITY.md](SECURITY.md)。
+
 ```
 Edge 扩展  ──导出──▶  dsh-deepseek-*.json  ──dsh-import.cmd──▶  ~/.dsh/sessions + workspace.json
 ```

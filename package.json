@@ -1,6 +1,6 @@
 {
   "name": "dsh-deepseek-import",
-  "version": "0.3.0",
+  "version": "0.3.1",
   "description": "DeepSeek web chat → DeepSeek Harness sessions (Edge extension + importer CLI + DSH plugin)",
   "type": "module",
   "license": "MIT",
@@ -43,7 +43,11 @@
     "edge-extension/",
     "README.md",
     "README.zh.md",
-    "LICENSE"
+    "LICENSE",
+    "CHANGELOG.md",
+    "CONTRIBUTING.md",
+    "SECURITY.md",
+    "THIRD_PARTY_NOTICES.md"
   ],
   "engines": {
     "node": ">=22"

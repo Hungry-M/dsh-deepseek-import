@@ -82,3 +82,24 @@ npm view dsh-deepseek-import dist-tags
 | 测试在 CI 挂、本地过 | 依赖了未提交的私有样本 | 样本缺失时 SKIP |
 | 新会话侧栏不出现 | `workspace.json` 启动时读取 | 重启 DSH |
 | 打开会话报 `grantWrite` | 工作区目录没有给当前用户「改权限/改所有者」，DSH 写不进自己的沙箱授权 | 0.2.4 起导入时自动在工作区目录上补一条可继承的完全控制；旧目录手动 `icacls <工作区目录> /grant "<用户>:(OI)(CI)F"` |
+
+## 五、开源约定对照（`D:\Documents\dev-notes`）
+
+约定：**MIT + DCO 1.1 + 轻量再许可授权**。当前状态：
+
+| 项 | 状态 |
+|---|---|
+| `LICENSE`（MIT，版权人与年份正确） | ✅ |
+| `CONTRIBUTING.md` 写明 DCO 与再许可条款 | ✅ |
+| `SECURITY.md` 提供私密报告渠道 | ✅（GitHub 私密报告入口需仓库公开后可用） |
+| `THIRD_PARTY_NOTICES.md` | ✅（当前不打包任何第三方代码） |
+| `CHANGELOG.md` 记录版本 | ✅ |
+| README 写项目状态与「非官方」 | ✅ |
+| DCO 检查在 PR 上生效 | ✅ `.github/workflows/dco.yml` |
+| 版本号各处一致 | ✅ |
+| 工作树与 git 历史无敏感串 | ✅ `node verify/privacy-scan.mjs` |
+| 示例配置用占位符 | ✅ |
+| 测试使用临时 `DSH_HOME` | ✅ |
+| GitHub secret scanning / Dependabot | ✅ 漏洞告警与自动修复已开启；secret scanning 需仓库公开 |
+| 分支保护 / issue 与 PR 模板 | ⬜ 公开前补 |
+
