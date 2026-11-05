@@ -3,18 +3,35 @@
 > 目的：把「登录 → 发布 → 上架」的每一步固定下来，避免每次靠记忆。
 > 最后一次核对：2026-11-05
 
+## 零、发版前必查（血的教训）
+
+改动 **`workspace.json` 结构** 或 **会话日志结构** 的提交，发布前必须：
+
+1. **在真实 DSH 上完整启动一次**——不是只跑单元测试，也不是只看文件写没写出来
+2. 确认：主窗口能起来、工作区列表正常、目标会话能打开、能跑一条命令
+3. 恢复现场：那次测试留下的工作区/会话，该删的删
+
+> 反例（0.2.6）：自动注册工作区时少写了 `createdAt`。我的测试只检查了「文件写出来了」，
+> 没有启动 DSH，于是带病的版本发到了 npm，用户更新后 DSH 直接起不来。
+
+对应的自动化守卫（已有，别删）：
+
+- `verify/test-workspace-shape.mjs` —— 工作区条目五个字段齐全
+- `commitWorkspaceStore()` —— 写入前 schema 自检 + 自动回滚
+- `verify/test-system-head.mjs` / `verify/smoke.mjs` —— 会话格式不变量
+
 ## 一、发版（npm）
 
 ```powershell
 # 1. 改版本号（三处保持一致：package.json / git tag / CHANGELOG）
 # 2. 提交
 git add -A
-git commit -m "chore: 0.2.1"
+git commit -m "chore: 0.2.7"
 
 # 3. 打 tag 并推送 —— CI 会用 OIDC 可信发布，不需要验证码
-git tag -a v0.2.1 -m "0.2.1: <一句话>"
+git tag -a v0.2.7 -m "0.2.7: <一句话>"
 git push origin main
-git push origin v0.2.1
+git push origin v0.2.7
 ```
 
 GitHub Actions 会依次跑：测试 → `npm publish --access public`。
