@@ -124,7 +124,7 @@ node dsh-import.mjs --dir "E:\chat"       # 只本次生效，不改配置
 ```powershell
 node dsh-import.mjs --list                     # 只列工作区
 node dsh-import.mjs                            # 自动用下载目录里最新的导出
-node dsh-import.mjs 导出.json -w "D:\proj"      # 直接指定工作区
+node dsh-import.mjs 导出.json -w "D:\proj"      # 直接指定工作区（目录不存在的工作区会自动注册）
 node dsh-import.mjs 导出.json --dry-run         # 只解析不写盘
 node dsh-import.mjs 导出.json --thinking        # 另外把思考塞进正文（默认只写 thinking.md）
 node dsh-import.mjs 导出.json --json            # 机器可读输出：{ok, workspace, created[]}

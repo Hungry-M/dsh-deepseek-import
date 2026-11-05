@@ -288,13 +288,33 @@ async function pickWorkspace(workspaces) {
   if (opts.workspace) {
     const wanted = path.resolve(opts.workspace).toLowerCase();
     const hit = workspaces.find((ws) => (ws.path || '').toLowerCase() === wanted);
-    if (!hit) {
-      console.error(`没有找到工作区：${opts.workspace}`);
-      console.error('现有工作区：');
-      for (const ws of workspaces) console.error(`  ${ws.path}`);
+    if (hit) return hit;
+
+    // 目录存在就自动注册：DSH 只在启动时读 workspace.json，所以仍需重启才可见，
+    // 但用户不必再为了「导入到一个新目录」先去界面里加一次工作区。
+    const abs = path.resolve(opts.workspace);
+    if (!fs.existsSync(abs)) {
+      console.error(`工作区目录不存在：${abs}`);
       process.exit(1);
     }
-    return hit;
+    const id = crypto.randomUUID();
+    const backup = `${WORKSPACE_STORE}.bak-${new Date().toISOString().replace(/[-:T]/g, '').slice(0, 14)}`;
+    fs.copyFileSync(WORKSPACE_STORE, backup);
+    const store = readJson(WORKSPACE_STORE);
+    store.tables = store.tables || {};
+    store.tables.workspaces = store.tables.workspaces || {};
+    store.tables.workspaces[id] = {
+      path: abs,
+      title: path.basename(abs),
+      sessionIds: [],
+      updatedAt: new Date().toISOString(),
+    };
+    store.global = store.global || {};
+    store.global.workspaceIds = Array.isArray(store.global.workspaceIds) ? store.global.workspaceIds : [];
+    if (!store.global.workspaceIds.includes(id)) store.global.workspaceIds.push(id);
+    fs.writeFileSync(WORKSPACE_STORE, JSON.stringify(store, null, 2) + '\n');
+    console.log(`  已自动注册新工作区：${abs}（备份 ${path.basename(backup)}）`);
+    return { id, path: abs, title: path.basename(abs), sessionCount: 0 };
   }
   if (workspaces.length === 1) return workspaces[0];
 

@@ -98,7 +98,7 @@ Sidecar location is also selectable in the extension (**Write sidecars to DSH ho
 ```powershell
 node dsh-import.mjs --list                      # list workspaces
 node dsh-import.mjs                             # newest export in the download folder
-node dsh-import.mjs export.json -w "D:\proj"     # explicit workspace
+node dsh-import.mjs export.json -w "D:\proj"     # explicit workspace (auto-registers an unknown dir)
 node dsh-import.mjs export.json --dry-run        # parse only
 node dsh-import.mjs export.json --thinking       # also inline thinking (default: thinking.md only)
 node dsh-import.mjs export.json --json           # machine-readable: {ok, workspace, created[]}
