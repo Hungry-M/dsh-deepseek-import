@@ -34,7 +34,13 @@ fs.writeFileSync(
     },
     tables: {
       workspaces: {
-        ws: { path: workspace, title: 'smoke', sessionIds: [], updatedAt: new Date().toISOString() },
+        ws: {
+          path: workspace,
+          title: 'smoke',
+          sessionIds: [],
+          createdAt: new Date().toISOString(),
+          updatedAt: new Date().toISOString(),
+        },
       },
     },
   }),

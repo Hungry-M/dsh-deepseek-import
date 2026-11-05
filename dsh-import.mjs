@@ -274,6 +274,28 @@ function readWorkspaceStore() {
   return readJson(WORKSPACE_STORE);
 }
 
+/**
+ * 写回 workspace.json 前先自检字段，并通过备份回滚。
+ *
+ * DSH 对工作区条目要求 path/title/sessionIds/createdAt/updatedAt 齐全；
+ * 少一个字段整个文件都会校验失败，DSH 连主窗口都起不来。这里把它变成
+ * 「写入前拦截 + 自动回滚」，避免再出现 0.2.5 那种把用户挡在门外的情况。
+ */
+function commitWorkspaceStore(store, backup, label) {
+  const required = ['path', 'title', 'sessionIds', 'createdAt', 'updatedAt'];
+  for (const [id, ws] of Object.entries(store?.tables?.workspaces ?? {})) {
+    const missing = required.filter((key) => !(key in ws));
+    if (missing.length) {
+      fs.copyFileSync(backup, WORKSPACE_STORE);
+      console.error(`workspace.json 自检失败：工作区 ${id} 缺字段 ${missing.join(', ')}`);
+      console.error(`已从备份回滚：${path.basename(backup)}`);
+      process.exit(1);
+    }
+  }
+  fs.writeFileSync(WORKSPACE_STORE, JSON.stringify(store, null, 2) + '\n');
+  if (label) console.log(label);
+}
+
 function listWorkspaces(store) {
   const table = store?.tables?.workspaces ?? {};
   return Object.entries(table).map(([id, ws]) => ({
@@ -308,13 +330,15 @@ async function pickWorkspace(workspaces) {
       path: abs,
       title: path.basename(abs),
       sessionIds: [],
+      // DSH 的 workspace schema 要求 createdAt 与 updatedAt 同时存在。
+      // 少任意一个，整个 workspace.json 校验失败，DSH 窗口直接起不来。
+      createdAt: new Date().toISOString(),
       updatedAt: new Date().toISOString(),
     };
     store.global = store.global || {};
     store.global.workspaceIds = Array.isArray(store.global.workspaceIds) ? store.global.workspaceIds : [];
     if (!store.global.workspaceIds.includes(id)) store.global.workspaceIds.push(id);
-    fs.writeFileSync(WORKSPACE_STORE, JSON.stringify(store, null, 2) + '\n');
-    console.log(`  已自动注册新工作区：${abs}（备份 ${path.basename(backup)}）`);
+    commitWorkspaceStore(store, backup, `  已自动注册新工作区：${abs}（备份 ${path.basename(backup)}）`);
     return { id, path: abs, title: path.basename(abs), sessionCount: 0 };
   }
   if (workspaces.length === 1) return workspaces[0];
@@ -1202,8 +1226,7 @@ async function main() {
       if (!ws.sessionIds.includes(item.sessionId)) ws.sessionIds.push(item.sessionId);
     }
     ws.updatedAt = new Date().toISOString();
-    fs.writeFileSync(WORKSPACE_STORE, JSON.stringify(fresh, null, 2) + '\n');
-    console.log(`\n已注册到 workspace.json（备份：${path.basename(backup)}）`);
+    commitWorkspaceStore(fresh, backup, `\n已注册到 workspace.json（备份：${path.basename(backup)}）`);
   }
 
   console.log(`\n完成：${created.length} 个会话已写入 ${SESSIONS_ROOT}`);
