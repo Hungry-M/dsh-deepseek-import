@@ -33,7 +33,48 @@ session_projcache/<id>.json   侧栏标题与统计
 | `dsh-session move <id> --to <ws>` | 跨工作区迁移 | ✅ 已有（move-session.mjs） |
 | `dsh-session copy <id> --to <ws>` | 复制为新会话（新 UUID，避免 ID 冲突） | ⬜ 待做 |
 | `dsh-session branch <id> --from <msg>` | 从某条消息分叉成新会话 | ⬜ 待做 |
+| `dsh-session create-thread` | 新建空会话（可带标题/工作区/初始提示词） | ⬜ 待做 |
 | `dsh-session repair` | 补 system 头 / 重排序号 | ✅ 已有（repair-session.mjs） |
+
+## 模块与客户端
+
+核心逻辑只有一份，客户端只负责「选目标 + 展示结果」：
+
+```
+session-core.mjs               计划：四份状态的 plan/apply（唯一真源）
+  ├─ CLI      dsh-import.mjs          命令行参数 → 调用核心
+  ├─ TUI      dsh-import-tui.mjs      问答式选择 → 调用核心
+  ├─ 辅助脚本 move/remove/repair/doctor 逐步并入核心
+  └─ Host 插件 index.js               工具 schema + UI 按钮/热键 → 调用核心
+```
+
+约定：
+
+- 核心只返回 `{ ok, changes[], warnings[] }`，不打印、不读 `process.argv`
+- 所有破坏性操作默认 `dry-run`，必须显式 `--apply` 才写盘
+- 写 `workspace.json` 前先 schema 自检，失败自动回滚（已有 `commitWorkspaceStore`）
+- 新功能只写一次核心，各客户端只加适配层，不复制逻辑
+
+## 与 DSH 原生能力的边界
+
+当前安装的 DSH 是 `0.2.2-rc.1`，**已经有原生 fork**：`Fork copies the exact inclusive event
+prefix selected by atSeq … into an independent Session`。所以：
+
+- 插件里优先调用原生 fork（如果宿主暴露该 RPC），失败再回退到我们自己的实现
+- CLI 场景没有宿主进程，只能自己实现
+- **按能力探测，不按版本号硬编码**；版本号只用于日志与告警
+- 将来若 DSH 提供 `session.create`，`create-thread` 也优先走原生
+
+## 插件交互计划（Hotkeys）
+
+| 热键 | 动作 |
+|---|---|
+| `Ctrl/Cmd+K` | 新建会话（create-thread） |
+| `Ctrl/Cmd+B` | 从当前消息分叉（branch） |
+| `Ctrl/Cmd+Shift+C` | 复制当前会话到别的工作区 |
+| `Delete` | 删除会话（二次确认，走 dry-run 预览） |
+
+热键属于「易变层」，等 Host 插件能实际安装、且确认新会话可即时出现在列表后再排期。
 
 **为什么值得做**：插件市场 1000 个条目里，名字带 session 的 29 个，但都是 UI 快捷方式，
 几乎不维护后三份状态。这两天的故障（登记丢失、`createdAt` 缺失、system 头、ACL）
