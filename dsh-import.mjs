@@ -115,6 +115,39 @@ function parseArgs(argv) {
 
 // ---------------------------------------------------------------- 找导出文件
 
+/**
+ * 执行命令并读回 stdout。
+ *
+ * 不直接用 execFileSync 的默认管道：DSH 沙箱里的受限进程打不开命名管道，
+ * 带管道的 spawn 会报 EPERM。改成把 stdout 写进临时文件再读，沙箱内外都能用。
+ */
+function runCapture(command, args) {
+  const tmp = path.join(os.tmpdir(), `dsh-cmd-${process.pid}-${crypto.randomInt(1_000_000)}.txt`);
+  let fd;
+  let text = '';
+  try {
+    fd = fs.openSync(tmp, 'w');
+    execFileSync(command, args, { stdio: ['ignore', fd, 'ignore'] });
+  } catch {
+    /* 命令失败时也读回已经写出的内容 */
+  } finally {
+    if (fd !== undefined) {
+      try {
+        fs.closeSync(fd);
+      } catch {
+        /* 忽略 */
+      }
+    }
+  }
+  try {
+    text = fs.readFileSync(tmp, 'utf8');
+  } catch {
+    text = '';
+  }
+  fs.rmSync(tmp, { force: true });
+  return text;
+}
+
 function expandEnv(value) {
   return String(value).replace(/%([^%]+)%/g, (whole, name) => process.env[name] ?? whole);
 }
@@ -124,16 +157,12 @@ function systemDownloadDirs() {
   const dirs = [];
   if (process.platform === 'win32') {
     try {
-      const out = execFileSync(
-        'reg',
-        [
-          'query',
-          'HKCU\\Software\\Microsoft\\Windows\\CurrentVersion\\Explorer\\User Shell Folders',
-          '/v',
-          '{374DE290-123F-4565-9164-39C4925E467B}',
-        ],
-        { encoding: 'utf8' }
-      );
+      const out = runCapture('reg', [
+        'query',
+        'HKCU\\Software\\Microsoft\\Windows\\CurrentVersion\\Explorer\\User Shell Folders',
+        '/v',
+        '{374DE290-123F-4565-9164-39C4925E467B}',
+      ]);
       const match = out.match(/REG_(?:EXPAND_)?SZ\s+(.+?)\s*$/m);
       if (match) dirs.push(expandEnv(match[1].trim()));
     } catch {
@@ -965,13 +994,14 @@ function writeTranscript(conversation, workspacePath, sessionId) {
 function ensureWorkspaceAcl(dir) {
   if (process.platform !== 'win32' || opts.noAclFix) return;
   try {
-    const user = execFileSync('whoami', { encoding: 'utf8' }).trim();
-    const listing = execFileSync('icacls', [dir], { encoding: 'utf8' });
+    const user = runCapture('whoami', []).trim();
+    if (!user) return;
+    const listing = runCapture('icacls', [dir]);
     const already = listing
       .split('\n')
       .some((line) => line.toUpperCase().includes(user.toUpperCase()) && /\(F\)/.test(line));
     if (already) return;
-    execFileSync('icacls', [dir, '/grant', `${user}:(OI)(CI)F`], { stdio: 'ignore' });
+    runCapture('icacls', [dir, '/grant', `${user}:(OI)(CI)F`]);
     console.log(`  已为工作区补写完全控制权限（DSH 沙箱需要）：${dir}`);
   } catch (error) {
     console.warn(`  无法自动补写工作区权限：${error.message}`);

@@ -1,6 +1,6 @@
 # Contributing
 
-感谢参与。这个项目遵循 [dev-notes 的开源约定](https://github.com/Hungry-M)：
+感谢参与。这个项目采用：
 
 - **许可证**：MIT（见 [LICENSE](LICENSE)）
 - **贡献协议**：DCO 1.1 + 轻量再许可授权（见下）

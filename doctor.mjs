@@ -155,18 +155,49 @@ function checkPermissions(workspaces) {
     record('权限', '平台检查', true, '非 Windows，跳过');
     return;
   }
-  let user;
+  // 不直接用 execFileSync 的默认管道：DSH 沙箱里的受限进程打不开命名管道（EPERM）
+  const runCapture = (command, args) => {
+    const tmp = path.join(os.tmpdir(), `dsh-doctor-${process.pid}-${Math.floor(Math.random() * 1e6)}.txt`);
+    let fd;
+    let text = '';
+    try {
+      fd = fs.openSync(tmp, 'w');
+      execFileSync(command, args, { stdio: ['ignore', fd, 'ignore'] });
+    } catch {
+      /* 失败也读回已写出的内容 */
+    } finally {
+      if (fd !== undefined) {
+        try {
+          fs.closeSync(fd);
+        } catch {
+          /* 忽略 */
+        }
+      }
+    }
+    try {
+      text = fs.readFileSync(tmp, 'utf8');
+    } catch {
+      text = '';
+    }
+    fs.rmSync(tmp, { force: true });
+    return text;
+  };
+
+  let user = '';
   try {
-    user = execFileSync('whoami', { encoding: 'utf8' }).trim();
+    user = runCapture('whoami', []).trim();
   } catch {
-    record('权限', '获取当前用户', false);
+    /* 下面统一处理 */
+  }
+  if (!user) {
+    record('权限', '获取当前用户', false, '无法执行 whoami');
     return;
   }
   for (const [, ws] of workspaces) {
     if (!ws.path || !fs.existsSync(ws.path)) continue;
     let listing = '';
     try {
-      listing = execFileSync('icacls', [ws.path], { encoding: 'utf8' });
+      listing = runCapture('icacls', [ws.path]);
     } catch {
       record('权限', `可读取权限：${ws.title}`, false);
       continue;

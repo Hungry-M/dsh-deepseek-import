@@ -8,8 +8,25 @@
 
 import { execFileSync } from 'node:child_process';
 import fs from 'node:fs';
+import os from 'node:os';
+import path from 'node:path';
 
-const files = execFileSync('git', ['ls-files'], { encoding: 'utf8' })
+// DSH 沙箱里的受限进程打不开命名管道，带管道的 spawn 会 EPERM；
+// 把 stdout 写进临时文件再读，沙箱内外都能跑。
+function gitLsFiles() {
+  const tmp = path.join(os.tmpdir(), `dsh-scan-${process.pid}.txt`);
+  const fd = fs.openSync(tmp, 'w');
+  try {
+    execFileSync('git', ['ls-files'], { stdio: ['ignore', fd, 'ignore'] });
+  } finally {
+    fs.closeSync(fd);
+  }
+  const text = fs.readFileSync(tmp, 'utf8');
+  fs.rmSync(tmp, { force: true });
+  return text;
+}
+
+const files = gitLsFiles()
   .split('\n')
   .filter(Boolean);
 
