@@ -83,7 +83,7 @@ npm view dsh-deepseek-import dist-tags
 | 新会话侧栏不出现 | `workspace.json` 启动时读取 | 重启 DSH |
 | 打开会话报 `grantWrite` | 工作区目录没有给当前用户「改权限/改所有者」，DSH 写不进自己的沙箱授权 | 0.2.4 起导入时自动在工作区目录上补一条可继承的完全控制；旧目录手动 `icacls <工作区目录> /grant "<用户>:(OI)(CI)F"` |
 
-## 五、开源约定对照（`D:\Documents\dev-notes`）
+## 五、开源约定对照
 
 约定：**MIT + DCO 1.1 + 轻量再许可授权**。当前状态：
 
@@ -101,5 +101,8 @@ npm view dsh-deepseek-import dist-tags
 | 示例配置用占位符 | ✅ |
 | 测试使用临时 `DSH_HOME` | ✅ |
 | GitHub secret scanning / Dependabot | ✅ 漏洞告警与自动修复已开启；secret scanning 需仓库公开 |
+| issue 模板与 PR 模板 | ✅ `.github/ISSUE_TEMPLATE/`、`PULL_REQUEST_TEMPLATE.md` |
+| 分支保护 | ⬜ 仓库公开后在 Settings → Branches 开启（当前私有仓需付费方案） |
+| 本机路径 / 凭据不进仓库 | ✅ `node-path.txt` 已移出版本控制，asar 路径改为 `DSH_ASAR` 环境变量 |
 | 分支保护 / issue 与 PR 模板 | ⬜ 公开前补 |
 

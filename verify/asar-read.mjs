@@ -1,6 +1,12 @@
 import fs from 'node:fs';
 
-const asar = 'D:\\New APPs\\DeepSeek Harness\\resources\\app.asar';
+// asar 路径由环境变量提供：安装位置因人而异
+const asar = process.env.DSH_ASAR;
+if (!asar || !fs.existsSync(asar)) {
+  console.error('请设置 DSH_ASAR 指向 DSH 的 app.asar，例如：');
+  console.error('   = "C:\\...\\DeepSeek Harness\\resources\\app.asar"');
+  process.exit(1);
+}
 const fd = fs.openSync(asar, 'r');
 const head = Buffer.alloc(16);
 fs.readSync(fd, head, 0, 16, 0);

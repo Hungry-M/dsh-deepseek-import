@@ -35,3 +35,7 @@ device.err
 gcm-trace.log
 .tmp-*
 
+
+# 本机 Node 路径（供 dsh-import.cmd 使用，不进仓库）
+node-path.txt
+
