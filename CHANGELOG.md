@@ -2,6 +2,19 @@
 
 版本号遵循 [语义化版本](https://semver.org/lang/zh-CN/)；`0.x` 阶段 API 与数据格式仍可能变化。
 
+## [0.3.2] - 2026-11-10
+
+### Fixed
+
+- 在 DSH 沙箱内运行时，`whoami` / `icacls` / `reg query` 的管道被拒（`spawnSync EPERM`），
+  导致 `--doctor` 的权限检查显示「获取当前用户」失败。改为把命令输出写进临时文件再读，
+  沙箱内外都能用。
+
+### Changed
+
+- Edge 扩展的名称与描述改为本地化（`_locales/en` + `_locales/zh_CN`），商店列表可同时提供中英文
+- 仓库文档整理：只保留 `README`、`ROADMAP`、`CHANGELOG`、`CONTRIBUTING`、`SECURITY`、`PRIVACY`、`THIRD_PARTY_NOTICES`
+
 ## [0.3.1] - 2026-11-05
 
 ### Added
@@ -9,11 +22,6 @@
 - `CONTRIBUTING.md`（DCO 1.1 + 轻量再许可授权）、`SECURITY.md`、`THIRD_PARTY_NOTICES.md`、`CHANGELOG.md`
 - DCO 检查工作流；README 增加项目状态与「非官方」声明
 
-### Fixed
-
-- 在 DSH 沙箱内运行时，`whoami` / `icacls` / `reg query` 的管道被拒（`spawnSync EPERM`），
-  导致 `--doctor` 的权限检查显示「获取当前用户」失败。改为把命令输出写进临时文件再读，
-  沙箱内外都能用。（此项在 0.3.1 发布之后并入，随下一个正式版本进入 npm 包。）
 
 ## [Unreleased]
 
