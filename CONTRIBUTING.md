@@ -24,7 +24,8 @@ node verify/smoke.mjs
 1. 在真实 DSH 上完整启动一次，确认主窗口能起来、会话能打开、能跑命令；
 2. 恢复测试留下的工作区与会话。
 
-理由见 [docs/PUBLISH-CHECKLIST.md](docs/PUBLISH-CHECKLIST.md) 的「发版前必查」。
+理由：0.2.6 曾因自动注册工作区时漏写 `createdAt`，让 `workspace.json` 校验失败、DSH 连主窗口都起不来。
+单元测试只验证了「文件写出来了」，没有验证「应用还能启动」。
 
 ## 提交
 
