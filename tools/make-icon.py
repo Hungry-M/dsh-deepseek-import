@@ -54,3 +54,7 @@ d.line(
 img = img.resize((SIZE, SIZE), Image.LANCZOS)
 img.save("assets/icon-180.png")
 print("assets/icon-180.png", img.size)
+
+# Edge 商店要求扩展 logo 最小 128x128、推荐 300x300，且必须是位图
+img.resize((300, 300), Image.LANCZOS).save("assets/icon-300.png")
+print("assets/icon-300.png", (300, 300))
