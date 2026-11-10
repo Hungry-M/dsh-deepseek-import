@@ -1,0 +1,14 @@
+{
+  "extensionName": {
+    "message": "DSH 对话迁移（DeepSeek 导出）",
+    "description": "浏览器工具栏与 Edge 加载项商店里显示的扩展名称。"
+  },
+  "extensionDescription": {
+    "message": "从 chat.deepseek.com 抓取对话并导出为 JSON，用于归档，或重建为 DeepSeek Harness 会话。",
+    "description": "一句话描述，最多 132 个字符。"
+  },
+  "actionTitle": {
+    "message": "DSH 对话迁移",
+    "description": "工具栏按钮的悬浮提示。"
+  }
+}

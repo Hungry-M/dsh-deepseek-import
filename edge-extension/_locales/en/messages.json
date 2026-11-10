@@ -1,0 +1,14 @@
+{
+  "extensionName": {
+    "message": "DSH Chat Migration (DeepSeek Export)",
+    "description": "Extension name shown in the browser toolbar and the Edge Add-ons store."
+  },
+  "extensionDescription": {
+    "message": "Capture DeepSeek web chats and export them as JSON for archival or for rebuilding as DeepSeek Harness sessions.",
+    "description": "One-line description, max 132 characters."
+  },
+  "actionTitle": {
+    "message": "DSH Chat Migration",
+    "description": "Tooltip on the toolbar button."
+  }
+}
