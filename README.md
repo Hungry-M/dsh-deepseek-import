@@ -27,14 +27,25 @@ cd dsh-deepseek-import
 node dsh-import.mjs --list
 ```
 
-The Edge extension must be loaded separately (next section) — a browser extension cannot ship inside an npm package.
+The Edge extension is installed separately (next section) — a browser extension cannot ship inside an npm package. **It is now published on the Edge Add-ons store**, so no developer mode is needed.
 
 ## 1. Install the extension (once)
+
+**From the store (recommended)**
+
+1. Open [DSH Chat Migration on Edge Add-ons](https://microsoftedge.microsoft.com/addons/detail/klboneoglpkdhefejpnhbkjbjpiklfmn)
+2. Click **Get** and accept the prompt
+3. Pin it to the toolbar (optional, but easier to find when capturing)
+
+The store build updates on its own.
+
+**From source (development and debugging)**
 
 1. Open `edge://extensions/` in Edge
 2. Turn on **Developer mode**
 3. Click **Load unpacked** and pick the `edge-extension` folder
-4. Pin it to the toolbar (optional)
+
+Both paths run the same code; use the second one when you are changing it.
 
 ## 2. Capture a conversation
 

@@ -26,7 +26,7 @@ cd dsh-deepseek-import
 node dsh-import.mjs --list
 ```
 
-扩展必须单独加载（见下一节）——浏览器扩展没法随 npm 包一起装。
+扩展必须单独安装（见下一节）——浏览器扩展没法随 npm 包一起装。**现已上架 Edge 加载项商店**，不用再开开发者模式。
 
 ### 作为 DSH 插件安装（可选）
 
@@ -44,10 +44,21 @@ dsh plugin add dsh-deepseek-import
 
 ## 一、安装扩展（一次性）
 
+**从商店安装（推荐）**
+
+1. 打开 [Edge 加载项商店 · DSH Chat Migration](https://microsoftedge.microsoft.com/addons/detail/klboneoglpkdhefejpnhbkjbjpiklfmn)
+2. 点 **获取 / Get**，浏览器会提示添加扩展
+3. 固定到工具栏（可选，但抓取时更好找）
+
+商店版本随发版更新，不用手动管。
+
+**从源码加载（开发或调试用）**
+
 1. Edge 地址栏打开 `edge://extensions/`
 2. 打开左下角 **开发人员模式**
 3. 点 **加载解压缩的扩展**，选择本目录下的 `edge-extension` 文件夹
-4. 固定到工具栏（可选）
+
+两种方式装的是同一份代码；改代码调试时用第二种。
 
 ## 二、抓取对话
 
