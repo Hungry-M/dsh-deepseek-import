@@ -24,17 +24,37 @@ session_projcache/<id>.json   侧栏标题与统计
 .dsh-imported/<id>/           侧挂文件与附件
 ```
 
-规划的子命令：
+规划的子命令（2026-11-11 收缩：DSH 原生已提供分叉与复制）：
 
 | 命令 | 作用 | 现状 |
 |---|---|---|
 | `dsh-session doctor` | 体检（已实现为 `dsh-import --doctor`） | ✅ 已有 |
-| `dsh-session delete <id>` | 永久删除，四份状态一起清 | ✅ 已有（remove-session.mjs） |
-| `dsh-session move <id> --to <ws>` | 跨工作区迁移 | ✅ 已有（move-session.mjs） |
-| `dsh-session copy <id> --to <ws>` | 复制为新会话（新 UUID，避免 ID 冲突） | ⬜ 待做 |
-| `dsh-session branch <id> --from <msg>` | 从某条消息分叉成新会话 | ⬜ 待做 |
-| `dsh-session create-thread` | 新建空会话（可带标题/工作区/初始提示词） | ⬜ 待做 |
+| `dsh-session delete <id...>` | 永久删除（不是归档），四份状态一起清 | ✅ 已有（remove-session.mjs），待支持多选 |
+| `dsh-session move <id...> --to <ws>` | 跨工作区迁移，支持多条 | ✅ 已有（move-session.mjs），待支持多选 |
+| `dsh-session workspace-move <ws> --to <路径>` | 迁移工作区路径，同步全部会话 `cwd`，清投影缓存 | ⬜ 待做 |
 | `dsh-session repair` | 补 system 头 / 重排序号 | ✅ 已有（repair-session.mjs） |
+| ~~`copy`~~ | DSH 原生「复制」已覆盖 | ❌ 不做 |
+| ~~`branch`~~ | DSH 原生「分叉会话」（Ctrl+Alt+F）已覆盖 | ❌ 不做 |
+| ~~`create-thread`~~ | 原生「新建对话」已覆盖 | ❌ 不做 |
+
+## 插件 UI 计划（类原生体验）
+
+DSH 的会话菜单已有：置顶 / 重命名 / 分叉会话 / 复制 Session ID / 在文件夹显示 / 归档会话。
+工作区菜单已有：重命名 / 在文件夹显示 / 删除工作区。
+
+我们只补原生缺失的四项，位置与视觉跟随原生：
+
+| 位置 | 新增项 | 样式 |
+|---|---|---|
+| 会话「…」菜单底部 | **删除会话** | 红色 + 复用删除图标 + 二次确认 |
+| 工作区「…」菜单 | **迁移工作区路径** | 普通项，带预览（列出将改动的会话） |
+| 会话「…」菜单 | **迁移到其他工作区** | 普通项，列出目标工作区 |
+
+两个判断：
+
+- 分隔线放在「归档”之上，把常规操作与「移出列表」类操作分开；归档与删除之间不画线（语义同类，靠颜色与确认区分）
+- 工作区路径迁移时，是否连带会话**用路径比对判断**，不需要额外标记：
+  `session.cwd === workspace.path` 跟随迁移；不等（已被单独迁移过）跳过
 
 ## 模块与客户端
 
